@@ -1,0 +1,8 @@
+.profile__button {
+  width: 150px;
+  display: block;
+  margin-left: auto;
+  border: 1px solid white;
+  padding: 14px 64px;
+  box-sizing: border-box;
+}
