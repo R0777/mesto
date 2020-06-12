@@ -10,17 +10,20 @@ const openPop = function (ev) {
 }
 
 const saveButt = function (ev) {
+  ev.preventDefault()
   let popName = popUp.querySelector('.popup__name').value
   let popJob = popUp.querySelector('.popup__job').value
   let avaName = proFile.querySelector('.profile__name')
   let avaJob = proFile.querySelector('.profile__job')
   avaJob.textContent = popJob;
   avaName.textContent = popName;
-  ev.preventDefault()
+  openPop();
 }
 
 const closeOverlay = function (ev) {
-  if (ev.target !== ev.currentTarget) { return }
+  if (ev.target !== ev.currentTarget) {
+    return
+  }
   openPop();
 }
 
