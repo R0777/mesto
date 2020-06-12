@@ -1,17 +1,33 @@
-# Проект 4: Место
 
-### Обзор
+[Сайт на GitPages](https://r0777.github.io/mesto/)
+___________________________
 
-* Figma
-* Картинки
+*Блок header*
 
-**Figma**
+![Логотип](https://r0777.github.io/mesto/images/svg/logo.svg)
+___________________________
+*Блок profile*
 
-* [Ссылка на макет в Figma](https://www.figma.com/file/StZjf8HnoeLdiXS7dYrLAh/JavaScript.-Sprint-4)
+# Место Russia
 
-**Картинки**
+![Фото Жак-Ив Кусто](https://r0777.github.io/russian-travel/images/png/lead-polka.png)
 
-Доставать картинки предстоит из Фигмы. Это расхожая практика, поэтому полезно потренироваться.
-Не забудьте [оптимизировать картинки](https://tinypng.com/), чтобы ваш сайт загружался быстрее.
+###Жак-Ив Кусто
+*Исследователь океана*
 
-Удачи!
+___________________________
+
+*Блок elements-grid:*
+
+![Карачаевск](https://r0777.github.io/mesto/images/jpg/karachaevsk.jpg)
+![Гора Эльбрус](https://r0777.github.io/mesto/images/jpg/elbrus.jpg)
+![Горы Домбая](https://r0777.github.io/mesto/images/jpg/dombay.jpg)
+![Гора Эльбрус](https://r0777.github.io/mesto/images/jpg/elbrus.jpg)
+![Домбай](https://r0777.github.io/mesto/images/jpg/dombay.jpg)
+![Карачаево-Черкесия](https://r0777.github.io/mesto/images/jpg/karachaevsk.jpg)
+
+___________________________
+
+*Блок footer:*
+
+*© 2020 Mesto Russia*
