@@ -4,17 +4,14 @@ ___________________________
 
 *Блок header*
 
-![Логотип](https://r0777.github.io/mesto/images/svg/logo.svg)
+# Место Russia
 ___________________________
 *Блок profile*
 
-# Место Russia
+![Фото Жак-Ив Кусто](https://r0777.github.io/mesto/images/jpg/avatar.jpg)
 
-![Фото Жак-Ив Кусто](https://r0777.github.io/russian-travel/images/png/lead-polka.png)
-
-###Жак-Ив Кусто
+### Жак-Ив Кусто
 *Исследователь океана*
-
 ___________________________
 
 *Блок elements-grid:*
