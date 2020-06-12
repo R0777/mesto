@@ -1,0 +1,28 @@
+.elements__place {
+  margin: 0;
+  position: relative;
+  width: 100%;
+  background: #fff;
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  padding: 25px 23% 31px 21px;
+  border-radius: 0 0 10px 10px;
+  box-sizing: border-box;
+  color: #000000;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.elements__place::after {
+  content: "";
+  width: 21px;
+  height: 18px;
+  position: absolute;
+  left: 86%;
+  top: 35%;
+  background-image: url(../../../images/svg/heart.svg);
+  background-repeat: no-repeat;
+}

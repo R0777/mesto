@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./pages/index.css"></link>
-  <script src="./js/main.js"></script>
   <title>Mesto</title>
 </head>
 <body class="page">
@@ -14,40 +13,50 @@
       <img src="./images/jpg/avatar.jpg" class="profile__avatar" alt="Ваше фото">
       <div class="profile__info">
         <h3 class="profile__name">Жак-Ив Кусто</h3>
-        <img src="./images/svg/pen.svg" class="profile__edit" alt="редактировать профиль">
+        <button class="profile__edit"><img src="./images/svg/pen.svg" class="profile__pen" alt="редактировать профиль"></button>
         <p class="profile__job">Исследователь океана</p>
       </div>
-      <img src="./images/svg/plus.svg" class="profile__button" alt="добавить новое место">
+      <button class="profile__button"><img src="./images/svg/plus.svg" alt="добавить новое место"></button>
     </section>
     <section class="elements">
-      <div class="elements__elem">
+      <article class="elements__elem">
         <img src="./images/jpg/karachaevsk.jpg" alt="фото Карачаевска" class="elements__pic">
-        <div class="elements__place">Карачаевск</div>
-      </div>
-      <div class="elements__elem">
+        <h4 class="elements__place">Карачаевск</h4>
+      </article>
+      <article class="elements__elem">
         <img src="./images/jpg/elbrus.jpg" alt="фото горы Эльбрус" class="elements__pic">
-        <div class="elements__place">Гора Эльбрус</div>
-      </div>
-      <div class="elements__elem">
+        <h4 class="elements__place">Гора Эльбрус</h4>
+      </article>
+      <article class="elements__elem">
         <img src="./images/jpg/dombay.jpg" alt="фото Домбая" class="elements__pic">
-        <div class="elements__place">Домбай</div>
-      </div>
-      <div class="elements__elem">
+        <h4 class="elements__place">Домбай</h4>
+      </article>
+      <article class="elements__elem">
         <img src="./images/jpg/elbrus.jpg" alt="фото горы Эльбрус" class="elements__pic">
-        <div class="elements__place">Гора Эльбрус</div>
-      </div>
-      <div class="elements__elem">
+        <h4 class="elements__place">Гора Эльбрус</h4>
+      </article>
+      <article class="elements__elem">
         <img src="./images/jpg/dombay.jpg" alt="фото Домбая" class="elements__pic">
-        <div class="elements__place">Домбай</div>
-      </div>
-      <div class="elements__elem">
+        <h4 class="elements__place">Домбай</h4>
+      </article>
+      <article class="elements__elem">
         <img src="./images/jpg/karachaevsk.jpg" alt="фото Карачаево-Черкесии" class="elements__pic">
-        <div class="elements__place">Карачаево-Черкесия</div>
-      </div>
+        <h4 class="elements__place">Карачаево-Черкесия</h4>
+      </article>
+    </section>
+    <section class="popup">
+      <form action="" class="popup__form">
+        <button class="popup__close"><img src ="./images/svg/close.svg" alt="закрыть форму" class="popup__cross"></button>
+        <h4 class="popup__title">Редактировать профиль</h4>
+        <input type="text" class="popup__name" value="Жак-Ив Кусто">
+        <input type="text" class="popup__job" value="Исследователь океана">
+        <button class="popup__save">Сохранить</button>
+      </form>
     </section>
   </main>
   <footer class="footer">
     <p class="footer__copy">&copy; 2020 Mesto Russia</p>
   </footer>
 </body>
+<script src="./js/index.js"></script>
 </html>

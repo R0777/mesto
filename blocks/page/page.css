@@ -10,3 +10,16 @@
   -moz-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
 }
+
+@media screen and (max-width: 930px) {
+  .page {
+    box-sizing: border-box;
+    padding: 0 19px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .page {
+    padding: 0;
+  }
+}

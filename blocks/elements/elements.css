@@ -1,6 +1,20 @@
-@import url(../vendor/normalize.css);
-@import url(../vendor/fonts/font-inter.css);
-@import url(../blocks/page/page.css);
-@import url(../blocks/header/header.css);
+@import url(./__elem/elements__elem.css);
+@import url(./__pic/elements__pic.css);
+@import url(./__place/elements__place.css);
 
-@import url(../blocks/footer/footer.css);
+.elements {
+  padding: 51px 0 0 0;
+  box-sizing: border-box;
+  display: grid;
+  grid-gap: 20px 18px;
+  grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
+  grid-template-rows: repeat(auto-fit, minmax(361px, 1fr));
+  max-width: 882px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 400px) {
+  .elements {
+    padding: 36px 19px 0;
+  }
+}

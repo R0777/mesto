@@ -1,6 +1,14 @@
-@import url(../vendor/normalize.css);
-@import url(../vendor/fonts/font-inter.css);
-@import url(../blocks/page/page.css);
-@import url(../blocks/header/header.css);
+@import url(./__copy/footer__copy.css);
 
-@import url(../blocks/footer/footer.css);
+.footer {
+  max-width: 882px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 66px 0 60px 0;
+}
+
+@media screen and (max-width: 400px) {
+  .footer {
+    padding: 48px 19px 36px;
+  }
+}

@@ -1,0 +1,30 @@
+const proFile = document.querySelector('.profile')
+const popUp = document.querySelector('.popup')
+const editButton = proFile.querySelector('.profile__edit')
+const closePop = popUp.querySelector('.popup__cross')
+const popSave = popUp.querySelector('.popup__save')
+
+const openPop = function (ev) {
+  popUp.classList.toggle('popup-open');
+  ev.preventDefault()
+}
+
+const saveButt = function (ev) {
+  let popName = popUp.querySelector('.popup__name').value
+  let popJob = popUp.querySelector('.popup__job').value
+  let avaName = proFile.querySelector('.profile__name')
+  let avaJob = proFile.querySelector('.profile__job')
+  avaJob.textContent = popJob;
+  avaName.textContent = popName;
+  ev.preventDefault()
+}
+
+const closeOverlay = function (ev) {
+  if (ev.target !== ev.currentTarget) { return }
+  openPop();
+}
+
+editButton.addEventListener("click", openPop);
+closePop.addEventListener("click", openPop);
+popSave.addEventListener("click", saveButt);
+popUp.addEventListener('click', closeOverlay);
