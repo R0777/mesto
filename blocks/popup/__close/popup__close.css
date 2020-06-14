@@ -9,6 +9,7 @@
   height: 55px;
   top: -45px;
   right: -45px;
+  outline: none;
   opacity: 1;
   transition: opacity .3s ease-in-out;
 }
