@@ -10,7 +10,7 @@
   overflow: hidden;
 }
 
-@media scree and (max-width: 709px) {
+@media screen and (max-width: 709px) {
   .profile__name {
     text-align: center;
   }
