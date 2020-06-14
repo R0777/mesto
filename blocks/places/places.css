@@ -1,6 +1,6 @@
-@import url(./__elem/places__elem.css);
+@import url(./__card/places__card.css);
 @import url(./__pic/places__pic.css);
-@import url(./__place/places__place.css);
+@import url(./__name/places__name.css);
 
 .places {
   padding: 51px 0 0 0;

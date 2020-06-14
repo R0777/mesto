@@ -11,7 +11,7 @@
   transition: opacity .3s ease-in-out;
 }
 
-@media screen and (max-width: 690px) {
+@media screen and (max-width: 709px) {
   .profile__button {
     margin: 0 auto;
     width: 100%;

@@ -1,4 +1,4 @@
-.places__place {
+.places__name {
   margin: 0;
   position: relative;
   width: 100%;
@@ -16,7 +16,7 @@
   overflow: hidden;
 }
 
-.places__place::after {
+.places__name::after {
   content: "";
   width: 21px;
   height: 18px;
