@@ -1,8 +1,8 @@
-@import url(./__elem/elements__elem.css);
-@import url(./__pic/elements__pic.css);
-@import url(./__place/elements__place.css);
+@import url(./__elem/places__elem.css);
+@import url(./__pic/places__pic.css);
+@import url(./__place/places__place.css);
 
-.elements {
+.places {
   padding: 51px 0 0 0;
   box-sizing: border-box;
   display: grid;
@@ -14,7 +14,7 @@
 }
 
 @media screen and (max-width: 400px) {
-  .elements {
+  .places {
     padding: 36px 19px 0;
   }
 }

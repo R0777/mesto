@@ -1,4 +1,4 @@
-.elements__place {
+.places__place {
   margin: 0;
   position: relative;
   width: 100%;
@@ -16,11 +16,12 @@
   overflow: hidden;
 }
 
-.elements__place::after {
+.places__place::after {
   content: "";
   width: 21px;
   height: 18px;
   position: absolute;
+  cursor: pointer;
   left: 86%;
   top: 35%;
   background-image: url(../../../images/svg/heart.svg);

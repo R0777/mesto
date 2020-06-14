@@ -1,10 +1,11 @@
 .profile__button {
   box-shadow: none;
-  background: #000;
+  background: url(../../../images/svg/plus.svg) no-repeat;
+  background-position: center;
   margin-left: auto;
   border: 1px solid white;
   display: inherit;
-  padding: 14px 64px;
+  padding: 25px 75px;
   box-sizing: border-box;
   opacity: 1;
   transition: opacity .3s ease-in-out;

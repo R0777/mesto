@@ -7,49 +7,49 @@
   <title>Mesto Russia</title>
 </head>
 <body class="page">
+  <header class="header"><img src="./images/svg/logo.svg" alt="логотип Mesto Russia" class="header__logo"></header>
   <main>
-    <header class="header"><img src="./images/svg/logo.svg" alt="логотип Mesto Russia" class="header__logo"></header>
     <section class="profile">
       <img src="./images/jpg/avatar.jpg" class="profile__avatar" alt="Ваше фото">
       <div class="profile__info">
         <h1 class="profile__name">Жак-Ив Кусто</h1>
-        <button class="profile__edit"><img src="./images/svg/pen.svg" class="profile__pen" alt="редактировать профиль"></button>
+        <button class="profile__edit"></button>
         <p class="profile__job">Исследователь океана</p>
       </div>
-      <button class="profile__button"><img src="./images/svg/plus.svg" alt="добавить новое место"></button>
+      <button class="profile__button"></button>
     </section>
-    <section class="elements">
-      <article class="elements__elem">
-        <img src="./images/jpg/karachaevsk.jpg" alt="фото Карачаевска" class="elements__pic">
-        <h4 class="elements__place">Карачаевск</h4>
+    <section class="places">
+      <article class="places__elem">
+        <img src="./images/jpg/karachaevsk.jpg" alt="фото Карачаевска" class="places__pic">
+        <h4 class="places__place">Карачаевск</h4>
       </article>
-      <article class="elements__elem">
-        <img src="./images/jpg/elbrus.jpg" alt="фото горы Эльбрус" class="elements__pic">
-        <h4 class="elements__place">Гора Эльбрус</h4>
+      <article class="places__elem">
+        <img src="./images/jpg/elbrus.jpg" alt="фото горы Эльбрус" class="places__pic">
+        <h4 class="places__place">Гора Эльбрус</h4>
       </article>
-      <article class="elements__elem">
-        <img src="./images/jpg/dombay.jpg" alt="фото Домбая" class="elements__pic">
-        <h4 class="elements__place">Домбай</h4>
+      <article class="places__elem">
+        <img src="./images/jpg/dombay.jpg" alt="фото Домбая" class="places__pic">
+        <h4 class="places__place">Домбай</h4>
       </article>
-      <article class="elements__elem">
-        <img src="./images/jpg/elbrus.jpg" alt="фото горы Эльбрус" class="elements__pic">
-        <h4 class="elements__place">Гора Эльбрус</h4>
+      <article class="places__elem">
+        <img src="./images/jpg/elbrus.jpg" alt="фото горы Эльбрус" class="places__pic">
+        <h4 class="places__place">Гора Эльбрус</h4>
       </article>
-      <article class="elements__elem">
-        <img src="./images/jpg/dombay.jpg" alt="фото Домбая" class="elements__pic">
-        <h4 class="elements__place">Домбай</h4>
+      <article class="places__elem">
+        <img src="./images/jpg/dombay.jpg" alt="фото Домбая" class="places__pic">
+        <h4 class="places__place">Домбай</h4>
       </article>
-      <article class="elements__elem">
-        <img src="./images/jpg/karachaevsk.jpg" alt="фото Карачаево-Черкесии" class="elements__pic">
-        <h4 class="elements__place">Карачаево-Черкесия</h4>
+      <article class="places__elem">
+        <img src="./images/jpg/karachaevsk.jpg" alt="фото Карачаево-Черкесии" class="places__pic">
+        <h4 class="places__place">Карачаево-Черкесия</h4>
       </article>
     </section>
     <section class="popup">
       <form class="popup__form">
-        <button class="popup__close"><img src ="./images/svg/close.svg" alt="закрыть форму" class="popup__cross"></button>
+        <button class="popup__close" type="button"></button>
         <h4 class="popup__title">Редактировать профиль</h4>
-        <input type="text" class="popup__name" value="Жак-Ив Кусто">
-        <input type="text" class="popup__job" value="Исследователь океана">
+        <input type="text" class="popup__name popup__input" value="Жак-Ив Кусто">
+        <input type="text" class="popup__job popup__input" value="Исследователь океана">
         <button class="popup__save" type="submit">Сохранить</button>
       </form>
     </section>
@@ -57,6 +57,6 @@
   <footer class="footer">
     <p class="footer__copy">&copy; 2020 Mesto Russia</p>
   </footer>
+  <script src="./js/index.js"></script>
 </body>
-<script src="./js/index.js"></script>
 </html>

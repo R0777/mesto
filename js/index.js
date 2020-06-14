@@ -1,12 +1,11 @@
 const proFile = document.querySelector('.profile')
 const popUp = document.querySelector('.popup')
 const editButton = proFile.querySelector('.profile__edit')
-const closePop = popUp.querySelector('.popup__cross')
+const closePop = popUp.querySelector('.popup__close')
 const popSave = popUp.querySelector('.popup__save')
 
 const openPop = function (ev) {
   popUp.classList.toggle('popup-open');
-  ev.preventDefault()
 }
 
 const saveButt = function (ev) {
