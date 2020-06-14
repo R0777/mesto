@@ -10,8 +10,8 @@ const openPop = function() {
 
 const saveButt = function(ev) {
   ev.preventDefault()
-  let popName = popUp.querySelector('.popup__name').value
-  let popJob = popUp.querySelector('.popup__job').value
+  let popName = popUp.querySelector('.popup__input_name').value
+  let popJob = popUp.querySelector('.popup__input_job').value
   let avaName = proFile.querySelector('.profile__name')
   let avaJob = proFile.querySelector('.profile__job')
   avaJob.textContent = popJob;
