@@ -1,0 +1,11 @@
+.places__like {
+  width: 20px;
+  height: 18px;
+  margin: 0;
+  background: url(../../../images/svg/heart.svg) no-repeat;
+  background-position: center;
+  background-size: cover;
+  box-shadow: none;
+  border: 0;
+  cursor: pointer;
+}

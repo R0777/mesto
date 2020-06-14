@@ -1,10 +1,10 @@
 @import url(./__close/popup__close.css);
 @import url(./__form/popup__form.css);
-@import url(./__job/popup__job.css);
-@import url(./__name/popup__name.css);
 @import url(./__save/popup__save.css);
 @import url(./__title/popup__title.css);
 @import url(./__input/popup__input.css);
+@import url(./__input/_name/popup__input_name.css);
+@import url(./__input/_job/popup__input_job.css);
 
 .popup {
   position: fixed;
