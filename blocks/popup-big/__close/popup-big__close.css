@@ -1,4 +1,4 @@
-.popup__close {
+.popup-big__close {
   position: absolute;
   background: url(../../../images/svg/close.svg) no-repeat;
   background-position: center;
@@ -7,21 +7,21 @@
   box-shadow: none;
   width: 55px;
   height: 55px;
-  top: -45px;
-  right: -45px;
+  top: -50px;
+  right: -50px;
   outline: none;
   opacity: 1;
   transition: opacity .3s ease-in-out;
 }
 
-.popup__close:hover {
+.popup-big__close:hover {
   cursor: pointer;
   opacity: .6;
   transition: opacity .3s ease-in-out;
 }
 
 @media screen and (max-width: 400px) {
-  .popup__close {
+  .popup-big__close {
     width: 45px;
     height: 45px;
     top: -40px;

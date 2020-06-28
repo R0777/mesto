@@ -21,56 +21,50 @@
       <button class="profile__button" type="button"></button>
     </section>
     <section class="places">
-      <figure class="places__card">
-        <img src="./images/jpg/karachaevsk.jpg" alt="фото Карачаевска" class="places__pic">
-        <figcaption class="places__text">
-          <h4 class="places__name">Карачаевск</h4><button type="button" class="places__like"></button>
-        </figcaption>
-      </figure>
-      <figure class="places__card">
-        <img src="./images/jpg/elbrus.jpg" alt="фото горы Эльбрус" class="places__pic">
-        <figcaption class="places__text">
-          <h4 class="places__name">Гора Эльбрус</h4><button type="button" class="places__like"></button>
-        </figcaption>
-      </figure>
-      <figure class="places__card">
-        <img src="./images/jpg/dombay.jpg" alt="фото Домбая" class="places__pic">
-        <figcaption class="places__text">
-          <h4 class="places__name">Домбай</h4><button type="button" class="places__like"></button>
-        </figcaption>
-      </figure>
-      <figure class="places__card">
-        <img src="./images/jpg/elbrus.jpg" alt="фото горы Эльбрус" class="places__pic">
-        <figcaption class="places__text">
-          <h4 class="places__name">Гора Эльбрус</h4><button type="button" class="places__like"></button>
-        </figcaption>
-      </figure>
-      <figure class="places__card">
-        <img src="./images/jpg/dombay.jpg" alt="фото Домбая" class="places__pic">
-        <figcaption class="places__text">
-          <h4 class="places__name">Домбай</h4><button type="button" class="places__like"></button>
-        </figcaption>
-      </figure>
-      <figure class="places__card">
-        <img src="./images/jpg/karachaevsk.jpg" alt="фото Карачаево-Черкесии" class="places__pic">
-        <figcaption class="places__text">
-          <h4 class="places__name">Карачаево-Черкесия</h4><button type="button" class="places__like"></button>
-        </figcaption>
-      </figure>
+
     </section>
     <section class="popup">
       <form class="popup__form">
         <button class="popup__close" type="button"></button>
         <h4 class="popup__title">Редактировать профиль</h4>
-        <input type="text" class="popup__input popup__input_name" value="Жак-Ив Кусто">
-        <input type="text" class="popup__input popup__input_job" value="Исследователь океана">
+        <input type="text" class="popup__input popup__input_name" value="Жак-Ив Кусто" required>
+        <input type="text" class="popup__input popup__input_job" value="Исследователь океана" required>
         <button class="popup__save" type="submit">Сохранить</button>
       </form>
     </section>
+    <section class="popup-add">
+      <form class="popup-add__form">
+        <button class="popup-add__close" type="button"></button>
+        <h4 class="popup-add__title">Новое место</h4>
+        <input type="text" class="popup-add__input popup-add__input_place" value="Название" required>
+        <input type="text" class="popup-add__input popup-add__input_pic" value="Ссылка на картинку" required>
+        <button class="popup-add__save" type="submit">Создать</button>
+      </form>
+    </section>
+    <section class="popup-big">
+      <figure class="popup-big__block">
+        <button class="popup-big__close" type="button"></button>
+        <img src="#" alt="#" class="popup-big__pic">
+        <figcaption class="popup-big__text">
+          <p class="popup-big__place"></p>
+        </figcaption>
+      </figure>
+    </section>
+
+
   </main>
   <footer class="footer">
     <p class="footer__copy">&copy; 2020 Mesto Russia</p>
   </footer>
+  <template class="template__place">
+    <figure class="places__card">
+      <img src="#" alt="#" class="places__pic">
+      <button class="places__trash"></button>
+      <figcaption class="places__text">
+        <h4 class="places__name"></h4><button type="button" class="places__like"></button>
+      </figcaption>
+    </figure>
+  </template>
   <script src="./js/index.js"></script>
 </body>
 

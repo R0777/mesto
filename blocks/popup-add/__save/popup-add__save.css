@@ -1,4 +1,4 @@
-.popup__save {
+.popup-add__save {
   font-weight: 300;
   font-size: 18px;
   line-height: 22px;
@@ -16,14 +16,14 @@
   transition: background .3s ease-in-out;
 }
 
-.popup__save:hover {
+.popup-add__save:hover {
   background: rgba(0, 0, 0, .8);
   transition: background .3s ease-in-out;
   cursor: pointer;
 }
 
 @media screen and (max-width: 400px) {
-  .popup__save {
+  .popup-add__save {
     font-size: 14px;
     line-height: 17px;
     margin-top: 36px;
