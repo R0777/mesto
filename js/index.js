@@ -1,31 +1,34 @@
 const proFile = document.querySelector('.profile')
-const popUp = document.querySelector('.popup')
-const popUpAdd = document.querySelector('.popup-add')
-const popUpBig = document.querySelector('.popup-big')
+const popUp = document.querySelectorAll('.popup')
 const editButton = proFile.querySelector('.profile__edit')
-const closePop = popUp.querySelector('.popup__close')
-const popSave = popUp.querySelector('.popup__save')
-const closePopAdd = popUpAdd.querySelector('.popup-add__close')
-const popSaveAdd = popUpAdd.querySelector('.popup-add__save')
+const closePop = document.querySelectorAll('.popup__close')
+const popSave = document.querySelectorAll('.popup__save')
 const addButton = proFile.querySelector('.profile__button')
-const popUpAddForm = popUpAdd.querySelector('.popup-add__form')
-const closePopBig = popUpBig.querySelector('.popup-big__close');
+const popUpAddForm = popUp[1].querySelector('.popup__block')
+const closePopBig = popUp[2].querySelector('.popup__close')
+const place = document.querySelector('.places')
+const template = document.querySelector('.template__place')
 
-const openPop = function () {
-  popUp.classList.toggle('popup-open');
-}
+const openPop = function (ev) {
+  const popEvt = ev.target
+  const popClass = popEvt.getAttribute('class')
 
-const openPopAdd = function () {
-  popUpAdd.classList.toggle('popup-add-open');
-}
-
-const openPopBigClose = function () {
-  popUpBig.classList.toggle('popup-big-open');
+  if (popClass === 'profile__edit') {
+    popUp[0].classList.toggle('popup-open');
+  }
+  else if (popClass === 'profile__button') {
+  popUp[1].classList.toggle('popup-open');
+  }
+  else if (popClass === 'places__pic') {
+  popUp[2].classList.toggle('popup-open');
+  }
+  else
+  return
 }
 
 const openPopBig = function (pic, place) {
-  const popUpBigPic = popUpBig.querySelector('.popup-big__pic')
-  const popUpBigText = popUpBig.querySelector('.popup-big__place')
+  const popUpBigPic = popUp[2].querySelector('.popup__pic')
+  const popUpBigText = popUp[2].querySelector('.popup__place')
   popUpBigPic.setAttribute('src', pic);
   popUpBigPic.setAttribute('alt', place);
   popUpBigText.innerHTML = place
@@ -33,8 +36,8 @@ const openPopBig = function (pic, place) {
 
 const saveButt = function (ev) {
   ev.preventDefault()
-  let popName = popUp.querySelector('.popup__input_name').value
-  let popJob = popUp.querySelector('.popup__input_job').value
+  let popName = popUp[0].querySelector('.popup__input_name').value
+  let popJob = popUp[0].querySelector('.popup__input_job').value
   let avaName = proFile.querySelector('.profile__name')
   let avaJob = proFile.querySelector('.profile__job')
   avaJob.textContent = popJob;
@@ -44,16 +47,12 @@ const saveButt = function (ev) {
 
 const addPlaceButton = function (ev) {
   ev.preventDefault()
-  let popPlace = popUpAdd.querySelector('.popup-add__input_place').value
-  let popPic = popUpAdd.querySelector('.popup-add__input_pic').value
+  let popPlace = popUp[1].querySelector('.popup__input_place').value
+  let popPic = popUp[1].querySelector('.popup__input_pic').value
+  addPlace(popPlace, popPic);
+  popUpAddForm.reset();
+  openPopAdd();
 
-  if (popPlace === "Название" || popPic === "Ссылка на картинку") {
-    return
-  } else {
-    addPlace(popPlace, popPic);
-    popUpAddForm.reset();
-    openPopAdd();
-  }
 }
 
 const closeOverlay = function (ev) {
@@ -64,13 +63,17 @@ const closeOverlay = function (ev) {
 }
 
 editButton.addEventListener("click", openPop);
-addButton.addEventListener('click', openPopAdd)
-closePop.addEventListener("click", openPop);
-closePopAdd.addEventListener("click", openPopAdd);
-closePopBig.addEventListener("click", openPopBigClose);
-popSaveAdd.addEventListener("click", addPlaceButton);
-popSave.addEventListener("click", saveButt);
-popUp.addEventListener('click', closeOverlay);
+addButton.addEventListener("click", openPop);
+
+closePop.forEach(el => {
+  el.addEventListener("click", openPop);
+})
+popSave.forEach(el => {
+  el.addEventListener("click", saveButt);
+})
+popUp.forEach(el => {
+  el.addEventListener('click', closeOverlay);
+})
 
 const initialCards = [{
     name: 'Архыз',
@@ -98,12 +101,11 @@ const initialCards = [{
   }
 ];
 
-const place = document.querySelector('.places')
-const temp = document.querySelector('.template__place')
+
 
 
 function addPlace(name, link) {
-  const elem = temp.content.cloneNode(true);
+  const elem = template.content.cloneNode(true);
   elem.querySelector('.places__pic').src = link
   elem.querySelector('.places__pic').alt = name
   elem.querySelector('.places__name').textContent = name

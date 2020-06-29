@@ -1,9 +1,9 @@
-.popup-add__input_pic {
+.popup__input_pic {
   margin-top: 29px;
 }
 
 @media screen and (max-width: 400px) {
-  .popup-add__input_pic {
+  .popup__input_pic {
     margin-top: 20px;
   }
 }
