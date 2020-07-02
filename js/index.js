@@ -26,49 +26,35 @@ const initialCards = [{
 
 const proFile = document.querySelector('.profile')
 const popUp = document.querySelectorAll('.popup')
+const popUpProfile = document.querySelector('#profile')
+const popUpAddcard = document.querySelector('#addcard')
+const popUpBigimg = document.querySelector('#bigimg')
 const editButton = proFile.querySelector('.profile__edit')
 const closePop = document.querySelectorAll('.popup__close')
-const popSave = document.querySelectorAll('.popup__save')
+const buttonSave = popUpProfile.querySelector('.popup__save')
+const buttonAdd = popUpAddcard.querySelector('.popup__save')
 const addButton = proFile.querySelector('.profile__button')
-const popUpAddForm = popUp[1].querySelector('.popup__block')
+const popUpAddForm = popUpAddcard.querySelector('.popup__block')
 const place = document.querySelector('.places')
 const template = document.querySelector('.template__place')
-const popUpBigPic = popUp[2].querySelector('.popup__pic')
-const popUpBigText = popUp[2].querySelector('.popup__place')
+const popUpBigPic = popUpBigimg.querySelector('.popup__pic')
+const popUpBigText = popUpBigimg.querySelector('.popup__place')
 const avaName = proFile.querySelector('.profile__name')
 const avaJob = proFile.querySelector('.profile__job')
-const inputName = popUp[0].querySelector('.popup__input_name')
-const inputJob = popUp[0].querySelector('.popup__input_job')
-const inputPlace = popUp[1].querySelector('.popup__input_place')
-const inputPic = popUp[1].querySelector('.popup__input_pic')
+const inputName = popUpProfile.querySelector('.popup__input_name')
+const inputJob = popUpProfile.querySelector('.popup__input_job')
+const inputPlace = popUpAddcard.querySelector('.popup__input_place')
+const inputPic = popUpAddcard.querySelector('.popup__input_pic')
 
-const tooglePopUp = (event) => {
-
-  const openPopUpEvt = event.target
-  const popClass = openPopUpEvt.getAttribute('class')
-
-  switch (popClass) {
-    case 'profile__edit':
-      popUp[0].classList.add('popup-open');
-      break;
-    case 'profile__button':
-      popUp[1].classList.add('popup-open');
-      break;
-    case 'places__pic':
-      popUp[2].classList.add('popup-open');
-      break;
-    default:
-      popUp.forEach(element => {
-        element.classList.remove('popup-open')
-      })
-  }
+const tooglePopUp = (element) => {
+  element.classList.toggle('popup-open')
 }
 
-const openPopBig = (pic, place, event) => {
+const openPopBig = (pic, place, popup) => {
   popUpBigPic.setAttribute('src', pic);
   popUpBigPic.setAttribute('alt', place);
   popUpBigText.textContent = place
-  tooglePopUp(event)
+  tooglePopUp(popup)
 }
 
 const updateProfile = (event) => {
@@ -77,7 +63,7 @@ const updateProfile = (event) => {
   const popJob = inputJob.value
   avaJob.textContent = popJob;
   avaName.textContent = popName;
-  tooglePopUp(event);
+  tooglePopUp(popUpProfile);
 }
 
 const addPlaceButton = (event) => {
@@ -86,7 +72,7 @@ const addPlaceButton = (event) => {
   const popPic = inputPic.value
   addPlace(popPlace, popPic);
   popUpAddForm.reset();
-  tooglePopUp(event);
+  tooglePopUp(popUpAddcard);
 }
 
 const closeOverlay = (event) => {
@@ -115,7 +101,7 @@ const addPlace = (name, link) => {
     const picLink = picEvent.src;
     const placeCard = picEvent.closest('.places__card');
     const placeTitle = placeCard.querySelector('.places__name').textContent
-    openPopBig(picLink, placeTitle, event);
+    openPopBig(picLink, placeTitle, popUpBigimg);
   })
 
   const trash = elem.querySelector('.places__trash')
@@ -135,16 +121,32 @@ const addPlace = (name, link) => {
   addCard(elem);
 }
 
-editButton.addEventListener("click", tooglePopUp);
-addButton.addEventListener("click", tooglePopUp);
+editButton.addEventListener("click", function () {
+  tooglePopUp(popUpProfile)
+});
+addButton.addEventListener("click", function () {
+  tooglePopUp(popUpAddcard)
+});
+
+
+
+
 popUp.forEach(element => {
   element.addEventListener('click', closeOverlay);
 })
+
+
 closePop.forEach(element => {
-  element.addEventListener("click", tooglePopUp);
+  element.addEventListener("click", function (event) {
+    const closeEvent = event.target
+    const close = closeEvent.closest('.popup');
+    tooglePopUp(close)
+  });
 })
-popSave[0].addEventListener("click", updateProfile);
-popSave[1].addEventListener("click", addPlaceButton);
+
+
+buttonSave.addEventListener("click", updateProfile);
+buttonAdd.addEventListener("click", addPlaceButton);
 
 initialCards.forEach(element => {
   addPlace(element.name, element.link);
