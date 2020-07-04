@@ -1,8 +1,11 @@
-.places__like {
-  width: 21px;
+.card__trash {
+  position: absolute;
+  top: 18px;
+  right: 15px;
+  width: 18px;
   height: 19px;
   margin: 0;
-  background: url(../../../images/svg/heart.svg) no-repeat;
+  background: url(../../../images/svg/trash.svg) no-repeat;
   background-position: center;
   background-size: cover;
   box-shadow: none;
@@ -13,9 +16,7 @@
   outline: none;
 }
 
-.places__like:hover {
+.card__trash:hover {
   transition: opacity .3s ease-in-out;
-  opacity: .6;
-  ;
+  opacity: 0.6;
 }
-

@@ -46,15 +46,15 @@ const inputJob = popUpProfile.querySelector('.popup__input_job')
 const inputPlace = popUpAddcard.querySelector('.popup__input_place')
 const inputPic = popUpAddcard.querySelector('.popup__input_pic')
 
-const tooglePopUp = (element) => {
-  element.classList.toggle('popup-open')
+const togglePopUp = (popupWindow) => {
+  popupWindow.classList.toggle('popup-open')
 }
 
 const openPopBig = (pic, place, popup) => {
   popUpBigPic.setAttribute('src', pic);
   popUpBigPic.setAttribute('alt', place);
   popUpBigText.textContent = place
-  tooglePopUp(popup)
+  togglePopUp(popup)
 }
 
 const updateProfile = (event) => {
@@ -63,7 +63,52 @@ const updateProfile = (event) => {
   const popJob = inputJob.value
   avaJob.textContent = popJob;
   avaName.textContent = popName;
-  tooglePopUp(popUpProfile);
+  togglePopUp(popUpProfile);
+
+}
+
+const closeOverlay = (event) => {
+  if (event.target !== event.currentTarget) {
+    return
+  }
+  togglePopUp(event.target);
+}
+
+const addCard = (card) => {
+  place.prepend(card)
+}
+
+const addPlace = (cardContent) => {
+
+  const elem = template.content.cloneNode(true);
+  const placesPic = elem.querySelector('.card__pic')
+  placesPic.src = cardContent.link
+  placesPic.alt = cardContent.name
+  elem.querySelector('.card__name').textContent = cardContent.name
+
+  placesPic.addEventListener('click', function (event) {
+    const picEvent = event.target
+    const picLink = picEvent.src;
+    const placeCard = picEvent.closest('.card');
+    const placeTitle = placeCard.querySelector('.card__name').textContent
+    openPopBig(picLink, placeTitle, popUpBigimg);
+  })
+
+  const trash = elem.querySelector('.card__trash')
+  const buttonLike = elem.querySelector('.card__like');
+
+  buttonLike.addEventListener('click', function (event) {
+    const likeTarget = event.target;
+    likeTarget.classList.toggle('card__like_active')
+  })
+
+  trash.addEventListener('click', function (event) {
+    const trashTarget = event.target;
+    const cardToRemove = trashTarget.closest('.card');
+    cardToRemove.remove();
+  })
+
+  addCard(elem);
 }
 
 const addPlaceButton = (event) => {
@@ -72,84 +117,37 @@ const addPlaceButton = (event) => {
   const popPic = inputPic.value
   addPlace(popPlace, popPic);
   popUpAddForm.reset();
-  tooglePopUp(popUpAddcard);
+  togglePopUp(popUpAddcard);
+
 }
 
-const closeOverlay = (event) => {
-  if (event.target !== event.currentTarget) {
-    return
-  }
-  popUp.forEach(element => {
-    element.classList.remove('popup-open');
-  })
-}
 
-const addCard = (card) => {
-  place.prepend(card)
-}
-
-const addPlace = (name, link) => {
-
-  const elem = template.content.cloneNode(true);
-  const placesPic = elem.querySelector('.places__pic')
-  placesPic.src = link
-  placesPic.alt = name
-  elem.querySelector('.places__name').textContent = name
-
-  placesPic.addEventListener('click', function (event) {
-    const picEvent = event.target
-    const picLink = picEvent.src;
-    const placeCard = picEvent.closest('.places__card');
-    const placeTitle = placeCard.querySelector('.places__name').textContent
-    openPopBig(picLink, placeTitle, popUpBigimg);
-  })
-
-  const trash = elem.querySelector('.places__trash')
-  const buttonLike = elem.querySelector('.places__like');
-
-  buttonLike.addEventListener('click', function (event) {
-    const likeTarget = event.target;
-    likeTarget.classList.toggle('places__like_active')
-  })
-
-  trash.addEventListener('click', function (event) {
-    const trashTarget = event.target;
-    const cardToRemove = trashTarget.closest('.places__card');
-    cardToRemove.remove();
-  })
-
-  addCard(elem);
-}
-
-editButton.addEventListener("click", function () {
-  tooglePopUp(popUpProfile)
+editButton.addEventListener("click", () => {
+  togglePopUp(popUpProfile)
 });
-addButton.addEventListener("click", function () {
-  tooglePopUp(popUpAddcard)
+addButton.addEventListener("click", () => {
+  togglePopUp(popUpAddcard)
 });
-
-
-
 
 popUp.forEach(element => {
   element.addEventListener('click', closeOverlay);
 })
 
-
 closePop.forEach(element => {
-  element.addEventListener("click", function (event) {
+  element.addEventListener("click", (event) => {
     const closeEvent = event.target
     const close = closeEvent.closest('.popup');
-    tooglePopUp(close)
+    togglePopUp(close)
   });
 })
 
+popUpProfile.addEventListener("submit", updateProfile);
 
-buttonSave.addEventListener("click", updateProfile);
-buttonAdd.addEventListener("click", addPlaceButton);
+popUpAddcard.addEventListener("submit", addPlaceButton);
 
-initialCards.forEach(element => {
-  addPlace(element.name, element.link);
-})
-
-//Develop
+const renderCard = (array) => {
+  array.forEach(element => {
+    addPlace(element);
+  })
+}
+renderCard(initialCards);

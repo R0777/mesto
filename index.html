@@ -27,8 +27,8 @@
       <form class="popup__block">
         <button class="popup__close" type="button"></button>
         <h4 class="popup__title">Редактировать профиль</h4>
-        <input type="text" class="popup__input popup__input_name" placeholder="Жак-Ив Кусто" required>
-        <input type="text" class="popup__input popup__input_job" placeholder="Исследователь океана" required>
+        <input type="text" class="popup__input popup__input_name" value="Жак-Ив Кусто" required>
+        <input type="text" class="popup__input popup__input_job" value="Исследователь океана" required>
         <button class="popup__save" type="submit">Сохранить</button>
       </form>
     </section>
@@ -57,11 +57,11 @@
     <p class="footer__copy">&copy; 2020 Mesto Russia</p>
   </footer>
   <template class="template__place">
-    <figure class="places__card">
-      <img src="#" alt="#" class="places__pic">
-      <button class="places__trash"></button>
-      <figcaption class="places__text">
-        <h4 class="places__name"></h4><button type="button" class="places__like"></button>
+    <figure class="card">
+      <img src="#" alt="#" class="card__pic">
+      <button class="card__trash"></button>
+      <figcaption class="card__text">
+        <h4 class="card__name"></h4><button type="button" class="card__like"></button>
       </figcaption>
     </figure>
   </template>
