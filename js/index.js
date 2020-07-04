@@ -1,27 +1,27 @@
 const initialCards = [{
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
+  name: 'Архыз',
+  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+},
+{
+  name: 'Челябинская область',
+  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+},
+{
+  name: 'Иваново',
+  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+},
+{
+  name: 'Камчатка',
+  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+},
+{
+  name: 'Холмогорский район',
+  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+},
+{
+  name: 'Байкал',
+  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+}
 ];
 
 const proFile = document.querySelector('.profile')
@@ -46,99 +46,102 @@ const inputJob = popUpProfile.querySelector('.popup__input_job')
 const inputPlace = popUpAddcard.querySelector('.popup__input_place')
 const inputPic = popUpAddcard.querySelector('.popup__input_pic')
 
+
 const togglePopUp = (popupWindow) => {
-  popupWindow.classList.toggle('popup-open')
+popupWindow.classList.toggle('popup-open')
 }
 
 const openPopBig = (pic, place, popup) => {
-  popUpBigPic.setAttribute('src', pic);
-  popUpBigPic.setAttribute('alt', place);
-  popUpBigText.textContent = place
-  togglePopUp(popup)
+popUpBigPic.setAttribute('src', pic);
+popUpBigPic.setAttribute('alt', place);
+popUpBigText.textContent = place
+togglePopUp(popup)
 }
 
 const updateProfile = (event) => {
-  event.preventDefault()
-  const popName = inputName.value
-  const popJob = inputJob.value
-  avaJob.textContent = popJob;
-  avaName.textContent = popName;
-  togglePopUp(popUpProfile);
+event.preventDefault()
+const popName = inputName.value
+const popJob = inputJob.value
+avaJob.textContent = popJob;
+avaName.textContent = popName;
+togglePopUp(popUpProfile);
 
 }
 
 const closeOverlay = (event) => {
-  if (event.target !== event.currentTarget) {
-    return
-  }
-  togglePopUp(event.target);
+if (event.target !== event.currentTarget) {
+  return
 }
-
-const addCard = (card) => {
-  place.prepend(card)
+togglePopUp(event.target);
 }
 
 const addPlace = (cardContent) => {
 
-  const elem = template.content.cloneNode(true);
-  const placesPic = elem.querySelector('.card__pic')
-  placesPic.src = cardContent.link
-  placesPic.alt = cardContent.name
-  elem.querySelector('.card__name').textContent = cardContent.name
+const elem = template.content.cloneNode(true);
+const placesPic = elem.querySelector('.card__pic')
+placesPic.src = cardContent.link
+placesPic.alt = cardContent.name
+elem.querySelector('.card__name').textContent = cardContent.name
 
-  placesPic.addEventListener('click', function (event) {
-    const picEvent = event.target
-    const picLink = picEvent.src;
-    const placeCard = picEvent.closest('.card');
-    const placeTitle = placeCard.querySelector('.card__name').textContent
-    openPopBig(picLink, placeTitle, popUpBigimg);
-  })
+placesPic.addEventListener('click',(event) => {
+  const picEvent = event.target
+  const picLink = picEvent.src;
+  const placeCard = picEvent.closest('.card');
+  const placeTitle = placeCard.querySelector('.card__name').textContent
+  openPopBig(picLink, placeTitle, popUpBigimg);
+})
 
-  const trash = elem.querySelector('.card__trash')
-  const buttonLike = elem.querySelector('.card__like');
+const trash = elem.querySelector('.card__trash')
+const buttonLike = elem.querySelector('.card__like');
 
-  buttonLike.addEventListener('click', function (event) {
-    const likeTarget = event.target;
-    likeTarget.classList.toggle('card__like_active')
-  })
+buttonLike.addEventListener('click',(event) => {
+  const likeTarget = event.target;
+  likeTarget.classList.toggle('card__like_active')
+})
 
-  trash.addEventListener('click', function (event) {
-    const trashTarget = event.target;
-    const cardToRemove = trashTarget.closest('.card');
-    cardToRemove.remove();
-  })
+trash.addEventListener('click',(event) => {
+  const trashTarget = event.target;
+  const cardToRemove = trashTarget.closest('.card');
+  cardToRemove.remove();
+})
+return elem;
+}
 
-  addCard(elem);
+const addCard = (cardContent) => {
+const card = addPlace(cardContent)
+place.prepend(card)
 }
 
 const addPlaceButton = (event) => {
-  event.preventDefault()
-  const popPlace = inputPlace.value
-  const popPic = inputPic.value
-  addPlace(popPlace, popPic);
-  popUpAddForm.reset();
-  togglePopUp(popUpAddcard);
+event.preventDefault()
+const cardContext = {
+  name: inputPlace.value,
+  link: inputPic.value
+  }
+addCard(cardContext);
+popUpAddForm.reset();
+togglePopUp(popUpAddcard);
 
 }
 
 
 editButton.addEventListener("click", () => {
-  togglePopUp(popUpProfile)
+togglePopUp(popUpProfile)
 });
 addButton.addEventListener("click", () => {
-  togglePopUp(popUpAddcard)
+togglePopUp(popUpAddcard)
 });
 
 popUp.forEach(element => {
-  element.addEventListener('click', closeOverlay);
+element.addEventListener('click', closeOverlay);
 })
 
 closePop.forEach(element => {
-  element.addEventListener("click", (event) => {
-    const closeEvent = event.target
-    const close = closeEvent.closest('.popup');
-    togglePopUp(close)
-  });
+element.addEventListener("click", (event) => {
+  const closeEvent = event.target
+  const close = closeEvent.closest('.popup');
+  togglePopUp(close)
+});
 })
 
 popUpProfile.addEventListener("submit", updateProfile);
@@ -146,8 +149,15 @@ popUpProfile.addEventListener("submit", updateProfile);
 popUpAddcard.addEventListener("submit", addPlaceButton);
 
 const renderCard = (array) => {
-  array.forEach(element => {
-    addPlace(element);
-  })
+array.forEach(element => {
+  addCard(element);
+})
 }
 renderCard(initialCards);
+
+//Уважаемый Алексей, прошу вас. Пишите более понятно. Вы пишите не для человека который уже все уже знает, а который учится. Часто бывает так, что вещи которые мы умеем делать для нас неочевидны.
+// Ваша формулировка "У функции должно быть единственное назначение, у этой -- сборка карточки и установка слушателей, но не добавление в разметку. Для добавления карточки в разметку надо завести отдельный метод, который вызывает функцию создания карточки и результат ее выполнения уже в разметку добавляет, его можно будет использовать как в методе загрузки первоначальных карточек, так и при добавлении пользовательской."
+// Я даже сейчас сомневаюсь что понял все что вы хотели мне этим сказать. И то что я внес все необходимые изменения которые вы подразумевали.
+// Нужно писать пошагово, типа создайте в функцию, там расположите то-то и то-то. Передайте то-то и то-то в функцию такую-то - вот как-то так.
+// А то уже 4 раз отдаю полностью рабочую версию, а приходится переписывать
+// Надеюсь что теперь все так как надо =)
