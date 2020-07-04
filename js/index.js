@@ -1,27 +1,27 @@
 const initialCards = [{
-  name: 'Архыз',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-},
-{
-  name: 'Челябинская область',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-},
-{
-  name: 'Иваново',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-},
-{
-  name: 'Камчатка',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-},
-{
-  name: 'Холмогорский район',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-},
-{
-  name: 'Байкал',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-}
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
 ];
 
 const proFile = document.querySelector('.profile')
@@ -48,100 +48,103 @@ const inputPic = popUpAddcard.querySelector('.popup__input_pic')
 
 
 const togglePopUp = (popupWindow) => {
-popupWindow.classList.toggle('popup-open')
+  popupWindow.classList.toggle('popup-open')
 }
 
 const openPopBig = (pic, place, popup) => {
-popUpBigPic.setAttribute('src', pic);
-popUpBigPic.setAttribute('alt', place);
-popUpBigText.textContent = place
-togglePopUp(popup)
+  popUpBigPic.setAttribute('src', pic);
+  popUpBigPic.setAttribute('alt', place);
+  popUpBigPic.setAttribute('title', place);
+  popUpBigText.textContent = place
+  togglePopUp(popup)
 }
 
 const updateProfile = (event) => {
-event.preventDefault()
-const popName = inputName.value
-const popJob = inputJob.value
-avaJob.textContent = popJob;
-avaName.textContent = popName;
-togglePopUp(popUpProfile);
+  event.preventDefault()
+  const popName = inputName.value
+  const popJob = inputJob.value
+  avaJob.textContent = popJob;
+  avaJob.setAttribute('title', popJob);
+  avaName.textContent = popName;
+  avaName.setAttribute('title', popName);
+  togglePopUp(popUpProfile);
 
 }
 
 const closeOverlay = (event) => {
-if (event.target !== event.currentTarget) {
-  return
-}
-togglePopUp(event.target);
+  if (event.target !== event.currentTarget) {
+    return
+  }
+  togglePopUp(event.target);
 }
 
 const addPlace = (cardContent) => {
 
-const elem = template.content.cloneNode(true);
-const placesPic = elem.querySelector('.card__pic')
-placesPic.src = cardContent.link
-placesPic.alt = cardContent.name
-elem.querySelector('.card__name').textContent = cardContent.name
+  const elem = template.content.cloneNode(true);
+  const placesPic = elem.querySelector('.card__pic')
+  placesPic.src = cardContent.link
+  placesPic.alt = cardContent.name
+  placesPic.title = cardContent.name
+  elem.querySelector('.card__name').textContent = cardContent.name
 
-placesPic.addEventListener('click',(event) => {
-  const picEvent = event.target
-  const picLink = picEvent.src;
-  const placeCard = picEvent.closest('.card');
-  const placeTitle = placeCard.querySelector('.card__name').textContent
-  openPopBig(picLink, placeTitle, popUpBigimg);
-})
+  placesPic.addEventListener('click', (event) => {
+    const targetPic = event.target
+    const picLink = targetPic.src;
+    const placeCard = targetPic.closest('.card');
+    const placeTitle = placeCard.querySelector('.card__name').textContent
+    openPopBig(picLink, placeTitle, popUpBigimg);
+  })
 
-const trash = elem.querySelector('.card__trash')
-const buttonLike = elem.querySelector('.card__like');
+  const trash = elem.querySelector('.card__trash')
+  const buttonLike = elem.querySelector('.card__like');
 
-buttonLike.addEventListener('click',(event) => {
-  const likeTarget = event.target;
-  likeTarget.classList.toggle('card__like_active')
-})
+  buttonLike.addEventListener('click', (event) => {
+    const likeTarget = event.target;
+    likeTarget.classList.toggle('card__like_active')
+  })
 
-trash.addEventListener('click',(event) => {
-  const trashTarget = event.target;
-  const cardToRemove = trashTarget.closest('.card');
-  cardToRemove.remove();
-})
-return elem;
+  trash.addEventListener('click', (event) => {
+    const trashTarget = event.target;
+    const cardToRemove = trashTarget.closest('.card');
+    cardToRemove.remove();
+  })
+  return elem;
 }
 
 const addCard = (cardContent) => {
-const card = addPlace(cardContent)
-place.prepend(card)
+  const card = addPlace(cardContent)
+  place.prepend(card)
 }
 
 const addPlaceButton = (event) => {
-event.preventDefault()
-const cardContext = {
-  name: inputPlace.value,
-  link: inputPic.value
+  event.preventDefault()
+  const cardContext = {
+    name: inputPlace.value,
+    link: inputPic.value
   }
-addCard(cardContext);
-popUpAddForm.reset();
-togglePopUp(popUpAddcard);
-
+  addCard(cardContext);
+  popUpAddForm.reset();
+  togglePopUp(popUpAddcard);
 }
 
 
 editButton.addEventListener("click", () => {
-togglePopUp(popUpProfile)
+  togglePopUp(popUpProfile)
 });
 addButton.addEventListener("click", () => {
-togglePopUp(popUpAddcard)
+  togglePopUp(popUpAddcard)
 });
 
 popUp.forEach(element => {
-element.addEventListener('click', closeOverlay);
+  element.addEventListener('click', closeOverlay);
 })
 
 closePop.forEach(element => {
-element.addEventListener("click", (event) => {
-  const closeEvent = event.target
-  const close = closeEvent.closest('.popup');
-  togglePopUp(close)
-});
+  element.addEventListener("click", (event) => {
+    const closeEvent = event.target
+    const close = closeEvent.closest('.popup');
+    togglePopUp(close)
+  });
 })
 
 popUpProfile.addEventListener("submit", updateProfile);
@@ -149,9 +152,9 @@ popUpProfile.addEventListener("submit", updateProfile);
 popUpAddcard.addEventListener("submit", addPlaceButton);
 
 const renderCard = (array) => {
-array.forEach(element => {
-  addCard(element);
-})
+  array.forEach(element => {
+    addCard(element);
+  })
 }
 renderCard(initialCards);
 
