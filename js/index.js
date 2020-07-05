@@ -31,8 +31,6 @@ const popUpAddcard = document.querySelector('#addcard')
 const popUpBigimg = document.querySelector('#bigimg')
 const editButton = proFile.querySelector('.profile__edit')
 const closePop = document.querySelectorAll('.popup__close')
-const buttonSave = popUpProfile.querySelector('.popup__save')
-const buttonAdd = popUpAddcard.querySelector('.popup__save')
 const addButton = proFile.querySelector('.profile__button')
 const popUpAddForm = popUpAddcard.querySelector('.popup__block')
 const place = document.querySelector('.places')
@@ -45,7 +43,6 @@ const inputName = popUpProfile.querySelector('.popup__input_name')
 const inputJob = popUpProfile.querySelector('.popup__input_job')
 const inputPlace = popUpAddcard.querySelector('.popup__input_place')
 const inputPic = popUpAddcard.querySelector('.popup__input_pic')
-
 
 const togglePopUp = (popupWindow) => {
   popupWindow.classList.toggle('popup-open')
@@ -68,7 +65,15 @@ const updateProfile = (event) => {
   avaName.textContent = popName;
   avaName.setAttribute('title', popName);
   togglePopUp(popUpProfile);
+}
 
+const clickTrash = (event) => {
+  const trashTarget = event.target;
+  const cardToRemove = trashTarget.closest('.card');
+  cardToRemove.querySelector('.card__pic').removeEventListener('click', clickPic)
+  cardToRemove.querySelector('.card__like').removeEventListener('click', clickLike)
+  cardToRemove.querySelector('.card__trash').removeEventListener('click', clickTrash)
+  cardToRemove.remove();
 }
 
 const closeOverlay = (event) => {
@@ -76,6 +81,19 @@ const closeOverlay = (event) => {
     return
   }
   togglePopUp(event.target);
+}
+
+const clickLike = (event) => {
+  const likeTarget = event.target;
+  likeTarget.classList.toggle('card__like_active')
+}
+
+const clickPic = (event) => {
+  const targetPic = event.target
+  const picLink = targetPic.src;
+  const placeCard = targetPic.closest('.card');
+  const placeTitle = placeCard.querySelector('.card__name').textContent
+  openPopBig(picLink, placeTitle, popUpBigimg);
 }
 
 const addPlace = (cardContent) => {
@@ -87,27 +105,12 @@ const addPlace = (cardContent) => {
   placesPic.title = cardContent.name
   elem.querySelector('.card__name').textContent = cardContent.name
 
-  placesPic.addEventListener('click', (event) => {
-    const targetPic = event.target
-    const picLink = targetPic.src;
-    const placeCard = targetPic.closest('.card');
-    const placeTitle = placeCard.querySelector('.card__name').textContent
-    openPopBig(picLink, placeTitle, popUpBigimg);
-  })
-
   const trash = elem.querySelector('.card__trash')
   const buttonLike = elem.querySelector('.card__like');
 
-  buttonLike.addEventListener('click', (event) => {
-    const likeTarget = event.target;
-    likeTarget.classList.toggle('card__like_active')
-  })
-
-  trash.addEventListener('click', (event) => {
-    const trashTarget = event.target;
-    const cardToRemove = trashTarget.closest('.card');
-    cardToRemove.remove();
-  })
+  placesPic.addEventListener('click', clickPic)
+  buttonLike.addEventListener('click', clickLike)
+  trash.addEventListener('click', clickTrash)
   return elem;
 }
 
@@ -157,10 +160,3 @@ const renderCard = (array) => {
   })
 }
 renderCard(initialCards);
-
-//Уважаемый Алексей, прошу вас. Пишите более понятно. Вы пишите не для человека который уже все уже знает, а который учится. Часто бывает так, что вещи которые мы умеем делать для нас неочевидны.
-// Ваша формулировка "У функции должно быть единственное назначение, у этой -- сборка карточки и установка слушателей, но не добавление в разметку. Для добавления карточки в разметку надо завести отдельный метод, который вызывает функцию создания карточки и результат ее выполнения уже в разметку добавляет, его можно будет использовать как в методе загрузки первоначальных карточек, так и при добавлении пользовательской."
-// Я даже сейчас сомневаюсь что понял все что вы хотели мне этим сказать. И то что я внес все необходимые изменения которые вы подразумевали.
-// Нужно писать пошагово, типа создайте в функцию, там расположите то-то и то-то. Передайте то-то и то-то в функцию такую-то - вот как-то так.
-// А то уже 4 раз отдаю полностью рабочую версию, а приходится переписывать
-// Надеюсь что теперь все так как надо =)
