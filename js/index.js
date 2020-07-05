@@ -116,7 +116,7 @@ const addCard = (cardContent) => {
   place.prepend(card)
 }
 
-const addPlaceButton = (event) => {
+const addPlaceHandler = (event) => {
   event.preventDefault()
   const cardContext = {
     name: inputPlace.value,
@@ -149,7 +149,7 @@ closePop.forEach(element => {
 
 popUpProfile.addEventListener("submit", updateProfile);
 
-popUpAddcard.addEventListener("submit", addPlaceButton);
+popUpAddcard.addEventListener("submit", addPlaceHandler);
 
 const renderCard = (array) => {
   array.forEach(element => {
