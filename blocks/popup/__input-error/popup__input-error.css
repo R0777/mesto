@@ -4,6 +4,6 @@
   color: red;
   opacity: 1;
   position: absolute;
-  top: calc(100% + 14px);
+  top: calc(100% + 1px);
   left: 0;
 }
