@@ -34,6 +34,7 @@ const closePop = document.querySelectorAll('.popup__close')
 const addButton = proFile.querySelector('.profile__button')
 const popUpAddForm = popUpAddcard.querySelector('.popup__block')
 const place = document.querySelector('.places')
+const buttonSave = popUpAddcard.querySelector('.popup__save')
 const template = document.querySelector('.template__place')
 const popUpBigPic = popUpBigimg.querySelector('.popup__pic')
 const popUpBigText = popUpBigimg.querySelector('.popup__place')
@@ -45,7 +46,7 @@ const inputPlace = popUpAddcard.querySelector('.popup__input_place')
 const inputPic = popUpAddcard.querySelector('.popup__input_pic')
 
 const togglePopUp = (popupWindow) => {
-  popupWindow.classList.toggle('popup-open')
+  popupWindow.classList.toggle('active')
 }
 
 const openPopBig = (pic, place, popup) => {
@@ -61,10 +62,10 @@ const updateProfile = (event) => {
   const popName = inputName.value
   const popJob = inputJob.value
   avaJob.textContent = popJob;
-  avaJob.setAttribute('title', popJob);
+  avaJob.setAttribute('title', popJob)
   avaName.textContent = popName;
-  avaName.setAttribute('title', popName);
-  togglePopUp(popUpProfile);
+  avaName.setAttribute('title', popName)
+  togglePopUp(popUpProfile)
 }
 
 const clickTrash = (event) => {
@@ -83,8 +84,15 @@ const closeOverlay = (event) => {
   togglePopUp(event.target);
 }
 
+const closeEsc = (event) => {
+  console.log(event.key)
+  if(event.keyCode === 27) {
+      togglePopUp(event.target)
+  }
+}
+
 const clickLike = (event) => {
-  const likeTarget = event.target;
+  const likeTarget = event.target
   likeTarget.classList.toggle('card__like_active')
 }
 
@@ -127,16 +135,17 @@ const addPlaceHandler = (event) => {
   }
   addCard(cardContext);
   popUpAddForm.reset();
+  buttonSave.classList.add('popup__save_inactive')
   togglePopUp(popUpAddcard);
 }
 
 
 editButton.addEventListener("click", () => {
   togglePopUp(popUpProfile)
-});
+})
 addButton.addEventListener("click", () => {
   togglePopUp(popUpAddcard)
-});
+})
 
 popUp.forEach(element => {
   element.addEventListener('click', closeOverlay);
@@ -147,8 +156,12 @@ closePop.forEach(element => {
     const closeEvent = event.target
     const close = closeEvent.closest('.popup');
     togglePopUp(close)
-  });
+  })
 })
+
+popUp.forEach(element => {
+  element.addEventListener("keydown", closeEsc); 
+  })
 
 popUpProfile.addEventListener("submit", updateProfile);
 
