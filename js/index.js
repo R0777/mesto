@@ -84,13 +84,6 @@ const closeOverlay = (event) => {
   togglePopUp(event.target);
 }
 
-const closeEsc = (event) => {
-  console.log(event.key)
-  if(event.keyCode === 27) {
-      togglePopUp(event.target)
-  }
-}
-
 const clickLike = (event) => {
   const likeTarget = event.target
   likeTarget.classList.toggle('card__like_active')
@@ -143,12 +136,21 @@ const addPlaceHandler = (event) => {
 editButton.addEventListener("click", () => {
   togglePopUp(popUpProfile)
 })
+
 addButton.addEventListener("click", () => {
   togglePopUp(popUpAddcard)
 })
 
 popUp.forEach(element => {
   element.addEventListener('click', closeOverlay);
+})
+
+document.addEventListener('keydown', (event) => {
+  if (event.keyCode === 27) {
+    popUp.forEach(form => {
+      form.classList.remove('active')
+    })
+  }
 })
 
 closePop.forEach(element => {
@@ -158,10 +160,6 @@ closePop.forEach(element => {
     togglePopUp(close)
   })
 })
-
-popUp.forEach(element => {
-  element.addEventListener("keydown", closeEsc); 
-  })
 
 popUpProfile.addEventListener("submit", updateProfile);
 
