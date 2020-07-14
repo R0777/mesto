@@ -22,7 +22,7 @@ const checkInputValidity = (formElement, inputElement) => {
 
 const hasInvalidInput = (inputList) => {
   return inputList.some((inputElement) => {
-    return !inputElement.validity.valid;
+    return !inputElement.validity.valid
   });
 }
 
@@ -32,7 +32,7 @@ const toggleButtonState = (inputList, buttonElement) => {
   } else buttonElement.classList.remove('popup__save_inactive')
 }
 
-const checkEnter = (inputList) => {
+const checkEnter = (inputList, buttonElement) => {
 
   document.addEventListener('keydown', (event) => {
     if (event.keyCode === 13) {
@@ -53,7 +53,7 @@ const setEventListeners = (formElement, inputSelector, submitButtonSelector) => 
     inputElement.addEventListener('input', function () {
       checkInputValidity(formElement, inputElement);
       toggleButtonState(inputList, buttonElement);
-      checkEnter(inputList);
+      checkEnter(inputList, buttonElement);
     });
   });
 }

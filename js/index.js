@@ -1,34 +1,8 @@
-const initialCards = [{
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
 const proFile = document.querySelector('.profile')
 const popUp = document.querySelectorAll('.popup')
 const popUpProfile = document.querySelector('#profile')
-const popUpAddcard = document.querySelector('#addcard')
-const popUpBigimg = document.querySelector('#bigimg')
+const popUpAddcard = document.querySelector('#add-card')
+const popupBigImg = document.querySelector('#bigimg')
 const editButton = proFile.querySelector('.profile__edit')
 const closePop = document.querySelectorAll('.popup__close')
 const addButton = proFile.querySelector('.profile__button')
@@ -36,8 +10,8 @@ const popUpAddForm = popUpAddcard.querySelector('.popup__block')
 const place = document.querySelector('.places')
 const buttonSave = popUpAddcard.querySelector('.popup__save')
 const template = document.querySelector('.template__place')
-const popUpBigPic = popUpBigimg.querySelector('.popup__pic')
-const popUpBigText = popUpBigimg.querySelector('.popup__place')
+const popUpBigPic = popupBigImg.querySelector('.popup__pic')
+const popUpBigText = popupBigImg.querySelector('.popup__place')
 const avaName = proFile.querySelector('.profile__name')
 const avaJob = proFile.querySelector('.profile__job')
 const inputName = popUpProfile.querySelector('.popup__input_name')
@@ -46,7 +20,7 @@ const inputPlace = popUpAddcard.querySelector('.popup__input_place')
 const inputPic = popUpAddcard.querySelector('.popup__input_pic')
 
 const togglePopUp = (popupWindow) => {
-  popupWindow.classList.toggle('active')
+  popupWindow.classList.toggle('active');
 }
 
 const openPopBig = (pic, place, popup) => {
@@ -54,18 +28,18 @@ const openPopBig = (pic, place, popup) => {
   popUpBigPic.setAttribute('alt', place);
   popUpBigPic.setAttribute('title', place);
   popUpBigText.textContent = place
-  togglePopUp(popup)
+  togglePopUp(popup);
 }
 
 const updateProfile = (event) => {
   event.preventDefault()
   const popName = inputName.value
   const popJob = inputJob.value
-  avaJob.textContent = popJob;
-  avaJob.setAttribute('title', popJob)
-  avaName.textContent = popName;
-  avaName.setAttribute('title', popName)
-  togglePopUp(popUpProfile)
+  avaJob.textContent = popJob
+  avaJob.setAttribute('title', popJob);
+  avaName.textContent = popName
+  avaName.setAttribute('title', popName);
+  togglePopUp(popUpProfile);
 }
 
 const clickTrash = (event) => {
@@ -94,7 +68,7 @@ const clickPic = (event) => {
   const picLink = targetPic.src;
   const placeCard = targetPic.closest('.card');
   const placeTitle = placeCard.querySelector('.card__name').textContent
-  openPopBig(picLink, placeTitle, popUpBigimg);
+  openPopBig(picLink, placeTitle, popupBigImg);
 }
 
 const addPlace = (cardContent) => {
@@ -112,12 +86,12 @@ const addPlace = (cardContent) => {
   placesPic.addEventListener('click', clickPic)
   buttonLike.addEventListener('click', clickLike)
   trash.addEventListener('click', clickTrash)
-  return elem;
+  return elem
 }
 
 const addCard = (cardContent) => {
-  const card = addPlace(cardContent)
-  place.prepend(card)
+  const card = addPlace(cardContent);
+  place.prepend(card);
 }
 
 const addPlaceHandler = (event) => {
@@ -133,12 +107,12 @@ const addPlaceHandler = (event) => {
 }
 
 
-editButton.addEventListener("click", () => {
-  togglePopUp(popUpProfile)
+editButton.addEventListener('click', () => {
+  togglePopUp(popUpProfile);
 })
 
-addButton.addEventListener("click", () => {
-  togglePopUp(popUpAddcard)
+addButton.addEventListener('click', () => {
+  togglePopUp(popUpAddcard);
 })
 
 popUp.forEach(element => {
@@ -154,16 +128,16 @@ document.addEventListener('keydown', (event) => {
 })
 
 closePop.forEach(element => {
-  element.addEventListener("click", (event) => {
+  element.addEventListener('click', (event) => {
     const closeEvent = event.target
     const close = closeEvent.closest('.popup');
-    togglePopUp(close)
+    togglePopUp(close);
   })
 })
 
-popUpProfile.addEventListener("submit", updateProfile);
+popUpProfile.addEventListener('submit', updateProfile);
 
-popUpAddcard.addEventListener("submit", addPlaceHandler);
+popUpAddcard.addEventListener('submit', addPlaceHandler);
 
 const renderCard = (array) => {
   array.forEach(element => {

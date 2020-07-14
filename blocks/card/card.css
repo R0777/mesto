@@ -8,4 +8,11 @@
 .card {
   margin: 0;
   position: relative;
+  max-width: 282px;
+}
+
+@media screen and (max-width: 620px) {
+  .card {
+    max-width: 100%;
+  }
 }
