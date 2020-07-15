@@ -18,9 +18,31 @@ const inputName = popUpProfile.querySelector('.popup__input_name')
 const inputJob = popUpProfile.querySelector('.popup__input_job')
 const inputPlace = popUpAddcard.querySelector('.popup__input_place')
 const inputPic = popUpAddcard.querySelector('.popup__input_pic')
+let nameValue
+let jobValue
 
-const togglePopUp = (popupWindow) => {
+
+
+const windowReset = (popupWindow, avaNameValue, avaJobValue, param) => {
+
+
+  if (avaNameValue) {
+    avaName.textContent = avaNameValue
+    avaJob.textContent = avaJobValue
+  } 
+
+  else if (param === 1) {
+    avaName.textContent = oldName
+    avaJob.textContent = oldJob
+  }
+
+  else popupWindow.querySelector('.popup__block').reset();
+}
+
+const togglePopUp = (popupWindow, param) => {
+  windowReset(popupWindow, nameValue, jobValue, param);
   popupWindow.classList.toggle('active');
+
 }
 
 const openPopBig = (pic, place, popup) => {
@@ -35,11 +57,14 @@ const updateProfile = (event) => {
   event.preventDefault()
   const popName = inputName.value
   const popJob = inputJob.value
+  const param = 1;
   avaJob.textContent = popJob
   avaJob.setAttribute('title', popJob);
   avaName.textContent = popName
   avaName.setAttribute('title', popName);
-  togglePopUp(popUpProfile);
+  nameValue = avaName.textContent
+  jobValue = avaJob.textContent
+  togglePopUp(popUpProfile, param);
 }
 
 const clickTrash = (event) => {
@@ -86,7 +111,7 @@ const addPlace = (cardContent) => {
   placesPic.addEventListener('click', clickPic)
   buttonLike.addEventListener('click', clickLike)
   trash.addEventListener('click', clickTrash)
-  return elem
+  return elem;
 }
 
 const addCard = (cardContent) => {

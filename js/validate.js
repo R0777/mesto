@@ -32,13 +32,15 @@ const toggleButtonState = (inputList, buttonElement) => {
   } else buttonElement.classList.remove('popup__save_inactive')
 }
 
-const checkEnter = (inputList, buttonElement) => {
+const checkEnter = (inputList) => {
 
   document.addEventListener('keydown', (event) => {
     if (event.keyCode === 13) {
       if (hasInvalidInput(inputList)) {
+        console.log(hasInvalidInput(inputList))
         event.preventDefault();
       }
+      else return
     }
   })
 }
@@ -53,7 +55,7 @@ const setEventListeners = (formElement, inputSelector, submitButtonSelector) => 
     inputElement.addEventListener('input', function () {
       checkInputValidity(formElement, inputElement);
       toggleButtonState(inputList, buttonElement);
-      checkEnter(inputList, buttonElement);
+      checkEnter(inputList);
     });
   });
 }
@@ -66,6 +68,7 @@ const enableValidation = ({
   const form = Array.from(document.querySelectorAll(formSelector));
 
   form.forEach((formElement) => {
+
     formElement.addEventListener('submit', function (event) {
       event.preventDefault();
     });
