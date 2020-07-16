@@ -27,6 +27,7 @@ const hasInvalidInput = (inputList) => {
 }
 
 const toggleButtonState = (inputList, buttonElement) => {
+
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add('popup__save_inactive')
   } else buttonElement.classList.remove('popup__save_inactive')
@@ -37,7 +38,6 @@ const checkEnter = (inputList) => {
   document.addEventListener('keydown', (event) => {
     if (event.keyCode === 13) {
       if (hasInvalidInput(inputList)) {
-        console.log(hasInvalidInput(inputList))
         event.preventDefault();
       }
       else return
@@ -74,10 +74,8 @@ const enableValidation = ({formSelector, inputSelector, submitButtonSelector}) =
   });
 };
 
-enableValidation(validObj);
-
-// enableValidation({
-//   formSelector: '.popup__block',
-//   inputSelector: '.popup__input',
-//   submitButtonSelector: '.popup__save',
-// });
+enableValidation({
+  formSelector: '.popup__block',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save',
+});

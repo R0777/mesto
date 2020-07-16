@@ -22,31 +22,29 @@ let nameValue
 let jobValue
 
 
-const validObj = {
-  formSelector: '.popup__block',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save',
-}
-
 const windowReset = (popupWindow, avaNameValue, avaJobValue) => {
 
-
+  const form = popupWindow.querySelector('.popup__block')
+  const input = Array.from(popupWindow.querySelectorAll('.popup__input'))
+  const button = popUpProfile.querySelector('.popup__save')
 
   if (avaNameValue) {
     avaName.textContent = avaNameValue
     avaJob.textContent = avaJobValue
     inputJob.value = avaJobValue
     inputName.value = avaNameValue
+    
   } else {
     if ((popupWindow.id === 'add-card') || (popupWindow.id === 'profile'))
-      popupWindow.querySelector('.popup__block').reset();
+      popupWindow.querySelector('.popup__block').reset();  
   }
-
+  
+  input.forEach(el => {hideInputError(form, el)})
+  toggleButtonState(input, button)
 }
 
 const togglePopUp = (popupWindow) => {
 
-  enableValidation(validObj);
   popupWindow.classList.toggle('active');
   windowReset(popupWindow, nameValue, jobValue);
 }
