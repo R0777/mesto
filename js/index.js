@@ -26,17 +26,19 @@ const windowReset = (popupWindow, avaNameValue, avaJobValue) => {
   if (avaNameValue) {
     avaName.textContent = avaNameValue
     avaJob.textContent = avaJobValue
+    inputJob.value = avaJobValue
+    inputName.value = avaNameValue
   } 
   else {
     popupWindow.querySelector('.popup__block').reset();
-
   }
 
 }
 
 const togglePopUp = (popupWindow) => {
-  windowReset(popupWindow, nameValue, jobValue);
   popupWindow.classList.toggle('active');
+  windowReset(popupWindow, nameValue, jobValue);
+  
 }
 
 const openPopBig = (pic, place, popup) => {
