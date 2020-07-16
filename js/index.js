@@ -21,24 +21,34 @@ const inputPic = popUpAddcard.querySelector('.popup__input_pic')
 let nameValue
 let jobValue
 
+
+const validObj = {
+  formSelector: '.popup__block',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save',
+}
+
 const windowReset = (popupWindow, avaNameValue, avaJobValue) => {
+
+
 
   if (avaNameValue) {
     avaName.textContent = avaNameValue
     avaJob.textContent = avaJobValue
     inputJob.value = avaJobValue
     inputName.value = avaNameValue
-  } 
-  else {
-    popupWindow.querySelector('.popup__block').reset();
+  } else {
+    if ((popupWindow.id === 'add-card') || (popupWindow.id === 'profile'))
+      popupWindow.querySelector('.popup__block').reset();
   }
 
 }
 
 const togglePopUp = (popupWindow) => {
+
+  enableValidation(validObj);
   popupWindow.classList.toggle('active');
   windowReset(popupWindow, nameValue, jobValue);
-  
 }
 
 const openPopBig = (pic, place, popup) => {

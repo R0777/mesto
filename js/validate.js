@@ -60,11 +60,7 @@ const setEventListeners = (formElement, inputSelector, submitButtonSelector) => 
   });
 }
 
-const enableValidation = ({
-  formSelector,
-  inputSelector,
-  submitButtonSelector
-}) => {
+const enableValidation = ({formSelector, inputSelector, submitButtonSelector}) => {
   const form = Array.from(document.querySelectorAll(formSelector));
 
   form.forEach((formElement) => {
@@ -78,8 +74,10 @@ const enableValidation = ({
   });
 };
 
-enableValidation({
-  formSelector: '.popup__block',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save',
-});
+enableValidation(validObj);
+
+// enableValidation({
+//   formSelector: '.popup__block',
+//   inputSelector: '.popup__input',
+//   submitButtonSelector: '.popup__save',
+// });
