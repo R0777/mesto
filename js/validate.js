@@ -39,8 +39,7 @@ const checkEnter = (inputList) => {
     if (event.keyCode === 13) {
       if (hasInvalidInput(inputList)) {
         event.preventDefault();
-      }
-      else return
+      } else return
     }
   })
 }
@@ -60,7 +59,11 @@ const setEventListeners = (formElement, inputSelector, submitButtonSelector) => 
   });
 }
 
-const enableValidation = ({formSelector, inputSelector, submitButtonSelector}) => {
+const enableValidation = ({
+  formSelector,
+  inputSelector,
+  submitButtonSelector
+}) => {
   const form = Array.from(document.querySelectorAll(formSelector));
 
   form.forEach((formElement) => {
@@ -68,7 +71,7 @@ const enableValidation = ({formSelector, inputSelector, submitButtonSelector}) =
     formElement.addEventListener('submit', function (event) {
       event.preventDefault();
     });
-    
+
     setEventListeners(formElement, inputSelector, submitButtonSelector);
 
   });

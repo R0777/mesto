@@ -1,3 +1,6 @@
+import {initialCards} from './utils.js';
+import Card from './Card.js'
+
 const proFile = document.querySelector('.profile')
 const popUp = document.querySelectorAll('.popup')
 const popUpProfile = document.querySelector('#profile')
@@ -33,13 +36,15 @@ const windowReset = (popupWindow, avaNameValue, avaJobValue) => {
     avaJob.textContent = avaJobValue
     inputJob.value = avaJobValue
     inputName.value = avaNameValue
-    
+
   } else {
     if ((popupWindow.id === 'add-card') || (popupWindow.id === 'profile'))
-      popupWindow.querySelector('.popup__block').reset();  
+      popupWindow.querySelector('.popup__block').reset();
   }
-  
-  input.forEach(el => {hideInputError(form, el)})
+
+  input.forEach(el => {
+    hideInputError(form, el)
+  })
   toggleButtonState(input, button)
 }
 
@@ -70,33 +75,13 @@ const updateProfile = (event) => {
   togglePopUp(popUpProfile);
 }
 
-const clickTrash = (event) => {
-  const trashTarget = event.target;
-  const cardToRemove = trashTarget.closest('.card');
-  cardToRemove.querySelector('.card__pic').removeEventListener('click', clickPic)
-  cardToRemove.querySelector('.card__like').removeEventListener('click', clickLike)
-  cardToRemove.querySelector('.card__trash').removeEventListener('click', clickTrash)
-  cardToRemove.remove();
-}
+
 
 const closeOverlay = (event) => {
   if (event.target !== event.currentTarget) {
     return
   }
   togglePopUp(event.target);
-}
-
-const clickLike = (event) => {
-  const likeTarget = event.target
-  likeTarget.classList.toggle('card__like_active')
-}
-
-const clickPic = (event) => {
-  const targetPic = event.target
-  const picLink = targetPic.src;
-  const placeCard = targetPic.closest('.card');
-  const placeTitle = placeCard.querySelector('.card__name').textContent
-  openPopBig(picLink, placeTitle, popupBigImg);
 }
 
 const addPlace = (cardContent) => {
@@ -167,9 +152,17 @@ popUpProfile.addEventListener('submit', updateProfile);
 
 popUpAddcard.addEventListener('submit', addPlaceHandler);
 
+
+
+
+
+
+
 const renderCard = (array) => {
   array.forEach(element => {
-    addCard(element);
+const newCard = new Card(element, '.template__place');
+const cardElement = newCard.generateCard()
+    addCard(cardElement);
   })
 }
 renderCard(initialCards);
