@@ -1,10 +1,18 @@
+import FormValidator from './FormValidator.js'
+export const popUpProfile = document.querySelector('#profile')
+export const proFile = document.querySelector('.profile')
+export const avaName = proFile.querySelector('.profile__name')
+export const avaJob = proFile.querySelector('.profile__job')
+export const inputName = popUpProfile.querySelector('.popup__input_name')
+export const inputJob = popUpProfile.querySelector('.popup__input_job')
+export let nameValue
+export let jobValue
+
 export default class Card {
   constructor(data, cardTemplate) {
     this._name = data.name,
       this._link = data.link,
-      this._temp = cardTemplate,
-      this.nameValue,
-      this.jobValue
+      this._temp = cardTemplate
   }
 
   _getTemplate = () => {
@@ -16,7 +24,7 @@ export default class Card {
     this._element = cardElement;
   }
 
- static _windowReset = (popupWindow, avaNameValue, avaJobValue) => {
+  static _windowReset = (popupWindow, avaNameValue, avaJobValue) => {
     const popUpProfile = document.querySelector('#profile')
     const form = popupWindow.querySelector('.popup__block')
     const input = Array.from(popupWindow.querySelectorAll('.popup__input'))
@@ -34,15 +42,15 @@ export default class Card {
     }
 
     input.forEach(el => {
-      hideInputError(form, el)
+      FormValidator.hideInputError(form, el)
     })
-    this.toggleButtonState(input, button)
+    FormValidator.toggleButtonState(input, button)
   }
 
   static togglePopUp = (popupWindow) => {
 
     popupWindow.classList.toggle('active');
-    Card._windowReset(popupWindow, this.nameValue, this.jobValue);
+    Card._windowReset(popupWindow, nameValue, jobValue);
   }
 
 
@@ -64,6 +72,20 @@ export default class Card {
     popUpBigPic.setAttribute('title', place);
     popUpBigText.textContent = place
     Card.togglePopUp(popup);
+  }
+
+  static updateProfile = (event) => {
+
+    event.preventDefault()
+    const popName = inputName.value
+    const popJob = inputJob.value
+    avaJob.textContent = popJob
+    avaJob.setAttribute('title', popJob);
+    avaName.textContent = popName
+    avaName.setAttribute('title', popName);
+    nameValue = avaName.textContent
+    jobValue = avaJob.textContent
+    Card.togglePopUp(popUpProfile);
   }
 
 
