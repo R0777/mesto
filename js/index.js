@@ -33,14 +33,8 @@ const windowReset = (popupWindow, avaNameValue, avaJobValue) => {
     inputName.value = avaNameValue
 
   } else {
-    if (popupWindow.id === 'profile')
+    if (popupWindow.id === 'profile' || popupWindow.id === 'add-card')
       forms.reset();
-      else if (popupWindow.id === 'add-card') {
-        forms.reset();
-        inputPlace.reset();
-        inputPic.reset();
-      }
-      else return
   }
 
   input.forEach(el => {
