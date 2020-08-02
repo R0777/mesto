@@ -22,6 +22,9 @@ let nameValue
 let jobValue
 
 const windowReset = (popupWindow, avaNameValue, avaJobValue) => {
+  const forms = popupWindow.querySelector('.popup__block')
+  const input = Array.from(popupWindow.querySelectorAll('.popup__input'))
+  const button = popUpProfile.querySelector('.popup__save')
 
   if (avaNameValue) {
     avaName.textContent = avaNameValue
@@ -33,6 +36,13 @@ const windowReset = (popupWindow, avaNameValue, avaJobValue) => {
     if ((popupWindow.id === 'add-card') || (popupWindow.id === 'profile'))
       popupWindow.querySelector('.popup__block').reset();
   }
+
+  input.forEach(el => {
+    cardValidator._hideInputError(forms, el);
+    profileValidator._hideInputError(forms, el);
+  })
+  cardValidator._toggleButtonState(input, button)
+  profileValidator._toggleButtonState(input, button)
 }
 
 export const togglePopUp = (popupWindow) => {
