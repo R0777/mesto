@@ -52,7 +52,7 @@ export default class FormValidator {
       if (event.keyCode === 13) {
         if (this._hasInvalidInput(inputList)) {
           event.preventDefault();
-        } else return
+        }
       }
     })
   }
