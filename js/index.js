@@ -1,8 +1,12 @@
 import {initialCards} from './utils.js';
-import {popUpProfile, proFile, avaName, avaJob, inputName, inputJob} from './Card.js';
+import {proFile, avaName, avaJob,} from './Card.js';
 import Card from './Card.js'
+import {validationObj, cardForm, profileForm} from './FormValidator.js'
 import FormValidator from './FormValidator.js'
 
+const popUpProfile = document.querySelector('#profile')
+const inputName = popUpProfile.querySelector('.popup__input_name')
+const inputJob = popUpProfile.querySelector('.popup__input_job')
 const popUp = document.querySelectorAll('.popup')
 const popUpAddcard = document.querySelector('#add-card')
 const editButton = proFile.querySelector('.profile__edit')
@@ -12,14 +16,12 @@ const popUpAddForm = popUpAddcard.querySelector('.popup__block')
 const buttonSave = popUpAddcard.querySelector('.popup__save')
 const inputPlace = popUpAddcard.querySelector('.popup__input_place')
 const inputPic = popUpAddcard.querySelector('.popup__input_pic')
+const cardValidator = new FormValidator(validationObj, cardForm)
+const profileValidator = new FormValidator(validationObj, profileForm)
 let nameValue
 let jobValue
 
-export const windowReset = (popupWindow, avaNameValue, avaJobValue) => {
-  const popUpProfile = document.querySelector('#profile')
-  const form = popupWindow.querySelector('.popup__block')
-  const input = Array.from(popupWindow.querySelectorAll('.popup__input'))
-  const button = popUpProfile.querySelector('.popup__save')
+const windowReset = (popupWindow, avaNameValue, avaJobValue) => {
 
   if (avaNameValue) {
     avaName.textContent = avaNameValue
@@ -31,11 +33,6 @@ export const windowReset = (popupWindow, avaNameValue, avaJobValue) => {
     if ((popupWindow.id === 'add-card') || (popupWindow.id === 'profile'))
       popupWindow.querySelector('.popup__block').reset();
   }
-
-  input.forEach(el => {
-    FormValidator.hideInputError(form, el)
-  })
-  FormValidator.toggleButtonState(input, button)
 }
 
 export const togglePopUp = (popupWindow) => {
@@ -47,12 +44,10 @@ export const togglePopUp = (popupWindow) => {
 const updateProfile = (event) => {
 
   event.preventDefault()
-  const popName = inputName.value
-  const popJob = inputJob.value
-  avaJob.textContent = popJob
-  avaJob.setAttribute('title', popJob);
-  avaName.textContent = popName
-  avaName.setAttribute('title', popName);
+  avaJob.textContent = inputJob.value
+  avaJob.setAttribute('title', inputJob.value);
+  avaName.textContent = inputName.value
+  avaName.setAttribute('title', inputName.value);
   nameValue = avaName.textContent
   jobValue = avaJob.textContent
   togglePopUp(popUpProfile);
@@ -87,6 +82,7 @@ const addPlaceHandler = (event) => {
 
 editButton.addEventListener('click', () => {
   togglePopUp(popUpProfile);
+
 })
 
 addButton.addEventListener('click', () => {
@@ -125,14 +121,9 @@ const renderCard = (array) => {
 }
 renderCard(initialCards);
 
-const validationObj = {
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save',
-};
-
-const validation = (validationObj) => {
-  const newValidation = new FormValidator(validationObj, '.popup__block')
-  newValidation.enableValidation()
+const validation = () => {
+cardValidator.enableValidation()
+profileValidator.enableValidation()
 }
 
-validation(validationObj);
+validation();
