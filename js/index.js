@@ -1,21 +1,26 @@
 import {initialCards} from './utils.js';
-import {proFile, avaName, avaJob,} from './Card.js';
 import Card from './Card.js'
-import {validationObj, cardForm, profileForm} from './FormValidator.js'
 import FormValidator from './FormValidator.js'
+import {validationObj} from './FormValidator.js'
+
 
 const popUpProfile = document.querySelector('#profile')
 const inputName = popUpProfile.querySelector('.popup__input_name')
 const inputJob = popUpProfile.querySelector('.popup__input_job')
 const popUp = document.querySelectorAll('.popup')
 const popUpAddcard = document.querySelector('#add-card')
-const editButton = proFile.querySelector('.profile__edit')
 const closePop = document.querySelectorAll('.popup__close')
-const addButton = proFile.querySelector('.profile__button')
 const popUpAddForm = popUpAddcard.querySelector('.popup__block')
 const buttonSave = popUpAddcard.querySelector('.popup__save')
 const inputPlace = popUpAddcard.querySelector('.popup__input_place')
 const inputPic = popUpAddcard.querySelector('.popup__input_pic')
+const proFile = document.querySelector('.profile')
+const addButton = proFile.querySelector('.profile__button')
+const editButton = proFile.querySelector('.profile__edit')
+const avaName = proFile.querySelector('.profile__name')
+const avaJob = proFile.querySelector('.profile__job')
+const cardForm = '#add-card'
+const profileForm = '#profile'
 const cardValidator = new FormValidator(validationObj, cardForm)
 const profileValidator = new FormValidator(validationObj, profileForm)
 let nameValue
@@ -36,13 +41,19 @@ const windowReset = (popupWindow, avaNameValue, avaJobValue) => {
     if (popupWindow.id === 'profile' || popupWindow.id === 'add-card')
       forms.reset();
   }
+  formReset(forms, input, button);
+}
 
+const formReset = (forms, input, button) => {
   input.forEach(el => {
-    cardValidator._hideInputError(forms, el);
-    profileValidator._hideInputError(forms, el);
+  const errorElement = forms.querySelector(`#${el.id}-error`);
+  el.classList.remove('popup__input_error');
+  errorElement.classList.remove('popup__input-error');
+  errorElement.textContent = '';
+  el.classList.contains('popup__input_error')
+  ?button.classList.add('popup__save_inactive')
+  :button.classList.remove('popup__save_inactive')
   })
-  cardValidator._toggleButtonState(input, button)
-  profileValidator._toggleButtonState(input, button)
 }
 
 export const togglePopUp = (popupWindow) => {

@@ -1,8 +1,5 @@
 import {togglePopUp} from './index.js'
 
-export const proFile = document.querySelector('.profile')
-export const avaName = proFile.querySelector('.profile__name')
-export const avaJob = proFile.querySelector('.profile__job')
 const popupBigImg = document.querySelector('#bigimg')
 const popUpBigPic = popupBigImg.querySelector('.popup__pic')
 const popUpBigText = popupBigImg.querySelector('.popup__place')
