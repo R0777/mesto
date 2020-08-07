@@ -1,7 +1,12 @@
-import {initialCards} from './utils.js';
+import Section from './Section.js'
+import {
+  initialCards
+} from './utils.js';
 import Card from './Card.js'
 import FormValidator from './FormValidator.js'
-import {validationObj} from './FormValidator.js'
+import {
+  validationObj
+} from './FormValidator.js'
 
 
 const popUpProfile = document.querySelector('#profile')
@@ -23,6 +28,14 @@ const cardForm = '#add-card'
 const profileForm = '#profile'
 const cardValidator = new FormValidator(validationObj, cardForm)
 const profileValidator = new FormValidator(validationObj, profileForm)
+const cardsList = new Section({
+  items: initialCards,
+  renderer: (el) => {
+    const newCard = new Card(el, '.template__place');
+    const cardElement = newCard.generateCard();
+    cardsList.addItem(cardElement)
+  },
+}, '.places')
 let nameValue
 let jobValue
 
@@ -46,13 +59,14 @@ const windowReset = (popupWindow, avaNameValue, avaJobValue) => {
 
 const formReset = (forms, input, button) => {
   input.forEach(el => {
-  const errorElement = forms.querySelector(`#${el.id}-error`);
-  el.classList.remove('popup__input_error');
-  errorElement.classList.remove('popup__input-error');
-  errorElement.textContent = '';
-  el.classList.contains('popup__input_error')
-  ?button.classList.add('popup__save_inactive')
-  :button.classList.remove('popup__save_inactive')
+    const errorElement = forms.querySelector(`#${el.id}-error`);
+    el.classList.remove('popup__input_error');
+    errorElement.classList.remove('popup__input-error');
+    errorElement.textContent = '';
+    input.value = '';
+    el.classList.contains('popup__input_error') ?
+      button.classList.add('popup__save_inactive') :
+      button.classList.remove('popup__save_inactive')
   })
 }
 
@@ -134,17 +148,19 @@ popUpProfile.addEventListener('submit', updateProfile);
 
 popUpAddcard.addEventListener('submit', addPlaceHandler);
 
-const renderCard = (array) => {
-  array.forEach(element => {
-    const newCard = new Card(element, '.template__place');
-    addCard(newCard.generateCard());
-  })
-}
-renderCard(initialCards);
+cardsList.renderItem();
+
+// const renderCard = (array) => {
+//   array.forEach(element => {
+//     const newCard = new Card(element, '.template__place');
+//     addCard(newCard.generateCard());
+//   })
+// }
+// renderCard(initialCards);
 
 const validation = () => {
-cardValidator.enableValidation()
-profileValidator.enableValidation()
+  cardValidator.enableValidation()
+  profileValidator.enableValidation()
 }
 
 validation();
