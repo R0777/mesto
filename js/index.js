@@ -14,7 +14,7 @@ const inputName = popUpProfile.querySelector('.popup__input_name')
 const inputJob = popUpProfile.querySelector('.popup__input_job')
 const popUp = document.querySelectorAll('.popup')
 const popUpAddcard = document.querySelector('#add-card')
-const closePop = document.querySelectorAll('.popup__close')
+export const closePop = document.querySelectorAll('.popup__close')
 const popUpAddForm = popUpAddcard.querySelector('.popup__block')
 const buttonSave = popUpAddcard.querySelector('.popup__save')
 const inputPlace = popUpAddcard.querySelector('.popup__input_place')
@@ -121,20 +121,13 @@ editButton.addEventListener('click', () => {
 })
 
 addButton.addEventListener('click', () => {
-  togglePopUp(popUpAddcard);
+  const popupAdd = new Popup ('#add-card')
 })
 
 popUp.forEach(element => {
   element.addEventListener('click', closeOverlay);
 })
 
-document.addEventListener('keydown', (event) => {
-  if (event.keyCode === 27) {
-    popUp.forEach(form => {
-      form.classList.remove('active')
-    })
-  }
-})
 
 closePop.forEach(element => {
   element.addEventListener('click', (event) => {
