@@ -1,8 +1,4 @@
-import {togglePopUp} from './index.js'
-
-const popupBigImg = document.querySelector('#bigimg')
-const popUpBigPic = popupBigImg.querySelector('.popup__pic')
-const popUpBigText = popupBigImg.querySelector('.popup__place')
+import PopupWithImage from './PopupWithImage.js'
 
 
 export default class Card {
@@ -53,8 +49,9 @@ export default class Card {
       this._clickLike();
     });
 
-    this._element.querySelector('.card__pic').addEventListener('click', () => {
-      this._openPopBig();
+    this._element.querySelector('.card__pic').addEventListener('click', (ev) => {
+      const popupPic = new PopupWithImage('#bigimg')
+popupPic.open(ev)
     });
   }
 

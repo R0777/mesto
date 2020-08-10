@@ -1,6 +1,3 @@
-import {
-  closePop
-} from './index.js'
 export default class Popup {
   constructor(popupSelector) {
     this._selector = document.querySelector(popupSelector)
@@ -8,22 +5,26 @@ export default class Popup {
   open() {
     this._selector.classList.add('active')
     this._handleEscClose();
+    this.setEventListeners();
   }
 
   close() {
     this._selector.classList.remove('active')
-    this._selector.removeEventListener('keydown', _handleEscClose)
+    this._selector.removeEventListener('keydown', this._handleEscClose)
   }
 
   _handleEscClose() {
     document.addEventListener('keydown', (event) => {
       if (event.keyCode === 27) {
-        close()
+        this.close();
       }
     })
   }
 
   setEventListeners() {
-    this._selector.closePop.addEventListener('click', click)
+    const closePop = this._selector.querySelector('.popup__close')
+    closePop.addEventListener('click', () => { 
+      this.close();
+    })
   }
 }

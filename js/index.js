@@ -1,12 +1,10 @@
 import Section from './Section.js'
-import {
-  initialCards
-} from './utils.js';
+import Popup from './Popup.js'
+import PopupWithImage from './PopupWithImage.js'
+import {initialCards} from './utils.js';
 import Card from './Card.js'
 import FormValidator from './FormValidator.js'
-import {
-  validationObj
-} from './FormValidator.js'
+import {validationObj} from './FormValidator.js'
 
 
 const popUpProfile = document.querySelector('#profile')
@@ -14,7 +12,7 @@ const inputName = popUpProfile.querySelector('.popup__input_name')
 const inputJob = popUpProfile.querySelector('.popup__input_job')
 const popUp = document.querySelectorAll('.popup')
 const popUpAddcard = document.querySelector('#add-card')
-export const closePop = document.querySelectorAll('.popup__close')
+
 const popUpAddForm = popUpAddcard.querySelector('.popup__block')
 const buttonSave = popUpAddcard.querySelector('.popup__save')
 const inputPlace = popUpAddcard.querySelector('.popup__input_place')
@@ -70,12 +68,6 @@ const formReset = (forms, input, button) => {
   })
 }
 
-export const togglePopUp = (popupWindow) => {
-
-  popupWindow.classList.toggle('active');
-  windowReset(popupWindow, nameValue, jobValue);
-}
-
 const updateProfile = (event) => {
 
   event.preventDefault()
@@ -94,13 +86,6 @@ const addCard = (generatedCard) => {
   place.prepend(card);
 }
 
-const closeOverlay = (event) => {
-  if (event.target !== event.currentTarget) {
-    return
-  }
-  togglePopUp(event.target);
-}
-
 const addPlaceHandler = (event) => {
   event.preventDefault()
   const cardContext = {
@@ -116,26 +101,26 @@ const addPlaceHandler = (event) => {
 }
 
 editButton.addEventListener('click', () => {
-  togglePopUp(popUpProfile);
+  // const popupEdit = new Popup ('#profile')
+  // popupEdit.open();
 
 })
 
 addButton.addEventListener('click', () => {
-  const popupAdd = new Popup ('#add-card')
+  // const popupAdd = new Popup ('#add-card')
+  // popupAdd.open();
+
 })
 
 popUp.forEach(element => {
-  element.addEventListener('click', closeOverlay);
-})
-
-
-closePop.forEach(element => {
   element.addEventListener('click', (event) => {
-    const closeEvent = event.target
-    const close = closeEvent.closest('.popup');
-    togglePopUp(close);
-  })
+    if (event.target !== event.currentTarget) {
+      return
+    }
+  element.classList.remove('active')
+  });
 })
+
 
 popUpProfile.addEventListener('submit', updateProfile);
 
@@ -143,13 +128,6 @@ popUpAddcard.addEventListener('submit', addPlaceHandler);
 
 cardsList.renderItem();
 
-// const renderCard = (array) => {
-//   array.forEach(element => {
-//     const newCard = new Card(element, '.template__place');
-//     addCard(newCard.generateCard());
-//   })
-// }
-// renderCard(initialCards);
 
 const validation = () => {
   cardValidator.enableValidation()
