@@ -2,10 +2,11 @@ import PopupWithImage from './PopupWithImage.js'
 
 
 export default class Card {
-  constructor(data, cardTemplate) {
+  constructor(data, cardTemplate, {handleCardClick}) {
     this._name = data.name,
       this._link = data.link,
-      this._temp = cardTemplate
+      this._temp = cardTemplate,
+      this._handleCardClick = handleCardClick
   }
 
   _getTemplate() {
@@ -14,7 +15,7 @@ export default class Card {
       .querySelector('.card')
       .cloneNode(true);
 
-   return this._element = cardElement;
+    return this._element = cardElement;
   }
 
   _clickTrash() {
@@ -25,14 +26,14 @@ export default class Card {
     this._element = null
   }
 
- _openPopBig() {
-    const placeTitle = this._element.querySelector('.card__name').textContent
-    popUpBigPic.src = this._link;
-    popUpBigPic.alt = this._name;
-    popUpBigPic.title = this._name;
-    popUpBigText.textContent = placeTitle
-    togglePopUp(popupBigImg);
-  }
+  //  _openPopBig() {
+  //     const placeTitle = this._element.querySelector('.card__name').textContent
+  //     popUpBigPic.src = this._link;
+  //     popUpBigPic.alt = this._name;
+  //     popUpBigPic.title = this._name;
+  //     popUpBigText.textContent = placeTitle
+  //     togglePopUp(popupBigImg);
+  //   }
 
 
   _clickLike() {
@@ -49,9 +50,8 @@ export default class Card {
       this._clickLike();
     });
 
-    this._element.querySelector('.card__pic').addEventListener('click', (ev) => {
-      const popupPic = new PopupWithImage('#bigimg')
-popupPic.open(ev)
+    this._element.querySelector('.card__pic').addEventListener('click', (event) => {
+      this._handleCardClick(event);
     });
   }
 

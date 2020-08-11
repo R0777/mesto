@@ -26,10 +26,10 @@ const cardForm = '#add-card'
 const profileForm = '#profile'
 const cardValidator = new FormValidator(validationObj, cardForm)
 const profileValidator = new FormValidator(validationObj, profileForm)
-const cardsList = new Section({
-  items: initialCards,
-  renderer: (el) => {
-    const newCard = new Card(el, '.template__place');
+const cardsList = new Section({items: initialCards, renderer: (el) => {
+    const newCard = new Card(el, '.template__place', {handleCardClick: (event) => {
+new PopupWithImage('#bigimg').open(event)
+    }});
     const cardElement = newCard.generateCard();
     cardsList.addItem(cardElement)
   },
@@ -68,6 +68,9 @@ const formReset = (forms, input, button) => {
   })
 }
 
+
+
+
 const updateProfile = (event) => {
 
   event.preventDefault()
@@ -80,11 +83,11 @@ const updateProfile = (event) => {
   togglePopUp(popUpProfile);
 }
 
-const addCard = (generatedCard) => {
-  const place = document.querySelector('.places')
-  const card = generatedCard;
-  place.prepend(card);
-}
+// const addCard = (generatedCard) => {
+//   const place = document.querySelector('.places')
+//   const card = generatedCard;
+//   place.prepend(card);
+// }
 
 const addPlaceHandler = (event) => {
   event.preventDefault()
@@ -92,7 +95,6 @@ const addPlaceHandler = (event) => {
     name: inputPlace.value,
     link: inputPic.value
   }
-
   const newCard = new Card(cardContext, '.template__place').generateCard();
   addCard(newCard);
   popUpAddForm.reset();
@@ -101,14 +103,14 @@ const addPlaceHandler = (event) => {
 }
 
 editButton.addEventListener('click', () => {
-  // const popupEdit = new Popup ('#profile')
-  // popupEdit.open();
+  const popupEdit = new Popup ('#profile')
+  popupEdit.open();
 
 })
 
 addButton.addEventListener('click', () => {
-  // const popupAdd = new Popup ('#add-card')
-  // popupAdd.open();
+  const popupAdd = new Popup ('#add-card')
+  popupAdd.open();
 
 })
 
