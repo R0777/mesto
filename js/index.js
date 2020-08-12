@@ -5,6 +5,8 @@ import {initialCards} from './utils.js';
 import Card from './Card.js'
 import FormValidator from './FormValidator.js'
 import {validationObj} from './FormValidator.js'
+import PopupWithForm from './PopupWithForm.js';
+import UserInfo from './UserInfo.js';
 
 
 const popUpProfile = document.querySelector('#profile')
@@ -24,6 +26,7 @@ const avaName = proFile.querySelector('.profile__name')
 const avaJob = proFile.querySelector('.profile__job')
 const cardForm = '#add-card'
 const profileForm = '#profile'
+const userInfo = new UserInfo(avaName, avaJob)
 const cardValidator = new FormValidator(validationObj, cardForm)
 const profileValidator = new FormValidator(validationObj, profileForm)
 const cardsList = new Section({items: initialCards, renderer: (el) => {
@@ -36,6 +39,11 @@ new PopupWithImage('#bigimg').open(event)
 }, '.places')
 let nameValue
 let jobValue
+
+const profileObj = {
+  name: avaName,
+  job: avaJob
+}
 
 const windowReset = (popupWindow, avaNameValue, avaJobValue) => {
   const forms = popupWindow.querySelector('.popup__block')
@@ -73,14 +81,19 @@ const formReset = (forms, input, button) => {
 
 const updateProfile = (event) => {
 
-  event.preventDefault()
-  avaJob.textContent = inputJob.value
-  avaJob.setAttribute('title', inputJob.value);
-  avaName.textContent = inputName.value
-  avaName.setAttribute('title', inputName.value);
-  nameValue = avaName.textContent
-  jobValue = avaJob.textContent
-  togglePopUp(popUpProfile);
+  const popupProfile = new PopupWithForm (profileForm, {submitProfile: () => {
+const newUserInfo = new UserInfo (profileObj)
+newUserInfo.setUserInfo(newUserInfo.getUserInfo())
+  } })
+
+  // event.preventDefault()
+  // avaJob.textContent = inputJob.value
+  // avaJob.setAttribute('title', inputJob.value);
+  // avaName.textContent = inputName.value
+  // avaName.setAttribute('title', inputName.value);
+  // nameValue = avaName.textContent
+  // jobValue = avaJob.textContent
+  // togglePopUp(popUpProfile);
 }
 
 // const addCard = (generatedCard) => {
@@ -89,27 +102,51 @@ const updateProfile = (event) => {
 //   place.prepend(card);
 // }
 
-const addPlaceHandler = (event) => {
-  event.preventDefault()
+const addPlaceHandler = () => {
+
   const cardContext = {
     name: inputPlace.value,
     link: inputPic.value
-  }
-  const newCard = new Card(cardContext, '.template__place').generateCard();
-  addCard(newCard);
-  popUpAddForm.reset();
-  buttonSave.classList.add('popup__save_inactive')
-  togglePopUp(popUpAddcard);
+  };
+
+
+  const popupAdd = new PopupWithForm (cardForm, {addCard: () => {
+
+    const newCardSection = new Section({items: cardContext, renderer: (el) => {
+      const newCard = new Card(el, '.template__place', {handleCardClick: (event) => {
+  new PopupWithImage('#bigimg').open(event)
+      }});
+      const cardElement = newCard.generateCard();
+      newCardSection.addItem(cardElement)
+    },
+  }, '.places')
+  }})
+  popupAdd.setEventListeners()
 }
 
 editButton.addEventListener('click', () => {
-  const popupEdit = new Popup ('#profile')
+  const popupEdit = new Popup('#profile')
+  new UserInfo(profileObj)
   popupEdit.open();
 
 })
 
 addButton.addEventListener('click', () => {
-  const popupAdd = new Popup ('#add-card')
+  const popupAdd = new Popup(cardForm)
+  // const popupAdd = new PopupWithForm ('#add-card', {addCard: () => {
+  //   const cardContext = {
+  //     name: inputPlace.value,
+  //     link: inputPic.value
+  //   }
+  //   new Section({items: cardContext, renderer: (el) => {
+  //     const newCard = new Card(el, '.template__place', {handleCardClick: (event) => {
+  // new PopupWithImage('#bigimg').open(event)
+  //     }});
+  //     const cardElement = newCard.generateCard();
+  //     cardsList.addItem(cardElement)
+  //   },
+  // }, '.places')
+  // }})
   popupAdd.open();
 
 })
