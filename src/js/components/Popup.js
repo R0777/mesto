@@ -1,6 +1,6 @@
 export default class Popup {
   constructor(popupSelector) {
-    this._selector = document.querySelector(popupSelector)
+    this._selector = document.querySelector(`${popupSelector}`);
   }
   open() {
     this._selector.classList.add('active')

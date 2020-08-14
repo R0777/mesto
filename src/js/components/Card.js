@@ -1,10 +1,7 @@
-import PopupWithImage from './PopupWithImage.js'
-
-
 export default class Card {
-  constructor(data, cardTemplate, {handleCardClick}) {
-    this._name = data.name,
-      this._link = data.link,
+  constructor(name, link, cardTemplate, {handleCardClick}) {
+    this._name = name,
+      this._link = link,
       this._temp = cardTemplate,
       this._handleCardClick = handleCardClick
   }
@@ -26,16 +23,6 @@ export default class Card {
     this._element = null
   }
 
-  //  _openPopBig() {
-  //     const placeTitle = this._element.querySelector('.card__name').textContent
-  //     popUpBigPic.src = this._link;
-  //     popUpBigPic.alt = this._name;
-  //     popUpBigPic.title = this._name;
-  //     popUpBigText.textContent = placeTitle
-  //     togglePopUp(popupBigImg);
-  //   }
-
-
   _clickLike() {
     this._element.querySelector('.card__like').classList.toggle('card__like_active')
   }
@@ -50,8 +37,8 @@ export default class Card {
       this._clickLike();
     });
 
-    this._element.querySelector('.card__pic').addEventListener('click', (event) => {
-      this._handleCardClick(event);
+    this._element.querySelector('.card__pic').addEventListener('click', () => {
+      this._handleCardClick(this._link, this._name);
     });
   }
 

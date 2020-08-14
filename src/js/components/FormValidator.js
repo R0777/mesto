@@ -2,13 +2,15 @@ export const validationObj = {
   formsSelector: '.popup__block',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__save',
+  inputError: '.popup__input-error',
 };
 
 export default class FormValidator {
   constructor(obj, validForm) {
     this._formSelector = validForm,
       this._inputSelector = obj.inputSelector,
-      this._submitButtonSelector = obj.submitButtonSelector
+      this._submitButtonSelector = obj.submitButtonSelector,
+      this._inputError = obj.inputError
   }
 
   _showInputError(formElement, inputElement, errorMessage) {
@@ -24,6 +26,24 @@ export default class FormValidator {
     errorElement.classList.remove('popup__input-error');
     errorElement.textContent = '';
   };
+
+  hideErrors = (forms, id) => {
+    const input = Array.from(forms.querySelectorAll('.popup__input'))
+    const button = forms.querySelector('.popup__save')
+      input.forEach(el => {
+        const errorElement = forms.querySelector(`#${el.id}-error`);
+        el.classList.remove('popup__input_error');
+        errorElement.classList.remove('popup__input-error');
+        errorElement.textContent = '';
+        input.value = '';
+        if(id) {
+        el.classList.contains('popup__input_error') ?
+          button.classList.add('popup__save_inactive') :
+          button.classList.remove('popup__save_inactive')
+        }
+        else forms.querySelector('.popup__block').reset();
+      })
+    }
 
   _checkInputValidity = (formElement, inputElement) => {
     if (!inputElement.validity.valid) {
