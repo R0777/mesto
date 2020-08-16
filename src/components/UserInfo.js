@@ -4,11 +4,20 @@ export default class UserInfo {
     this._job = document.querySelector(`.${job}`);
   }
   getUserInfo() {
+    return {
+      name: this._name,
+      job: this._job
+    }
+  }
+
+
+  setUserInfoInput({ name, job }) {
     this._nameInput = document.querySelector('.popup__input_name');
     this._jobInput = document.querySelector('.popup__input_job');
-    this._nameInput.value = this._name.textContent;
-    this._jobInput.value = this._job.textContent;
+    this._nameInput.value = name.textContent;
+    this._jobInput.value = job.textContent;
   }
+
 
   setUserInfo({ name, job }) {
     this._job.textContent = job

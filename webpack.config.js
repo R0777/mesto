@@ -4,11 +4,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: './src/pages/index.js',
-  mode: 'production',
+  mode: 'development',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  devtool: 'eval',
   module: {
     rules: [
         {
