@@ -1,13 +1,13 @@
 export default class Card {
-  constructor(name, link, cardTemplate, {handleCardClick}) {
-    this._name = name,
-      this._link = link,
-      this._temp = cardTemplate,
-      this._handleCardClick = handleCardClick
+  constructor(name, link, cardTemplate, { handleCardClick }) {
+    this._name = name;
+      this._link = link;
+      this._template = cardTemplate;
+      this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
-    const cardElement = document.querySelector(this._temp)
+    const cardElement = document.querySelector(this._template)
       .content
       .querySelector('.card')
       .cloneNode(true);
@@ -16,10 +16,10 @@ export default class Card {
   }
 
   _clickTrash() {
-    this._element.querySelector('.card__pic').removeEventListener('click', this._openPopBig)
-    this._element.querySelector('.card__like').removeEventListener('click', this._clickLike)
-    this._element.querySelector('.card__trash').removeEventListener('click', this._clickTrash)
-    this._element.remove()
+    this._element.querySelector('.card__pic').removeEventListener('click', this._openPopBig);
+    this._element.querySelector('.card__like').removeEventListener('click', this._clickLike);
+    this._element.querySelector('.card__trash').removeEventListener('click', this._clickTrash);
+    this._element.remove();
     this._element = null
   }
 
@@ -46,7 +46,7 @@ export default class Card {
     this._getTemplate();
     this._setEventListeners();
     this._element.querySelector('.card__name').textContent = this._name;
-    const placesPic = this._element.querySelector('.card__pic')
+    const placesPic = this._element.querySelector('.card__pic');
     placesPic.src = this._link;
     placesPic.alt = this._name;
     placesPic.title = this._name;

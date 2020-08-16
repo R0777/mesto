@@ -4,10 +4,10 @@ import Card from '../components/Card.js'
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import FormValidator from '../components/FormValidator.js'
-import {initialCards} from '../utils/utils.js';
-import {validationObj} from '../components/FormValidator.js';
-import {popUpProfile,popUp,popUpAddcard,addButton,editButton,cardForm,profileForm} from '../utils/constants.js'
-import '../../pages/index.css';
+import { initialCards } from '../utils/utils.js';
+import { validationObj } from '../components/FormValidator.js';
+import { popUpProfile, popUp, popUpAddcard, addButton, editButton, cardForm, profileForm } from '../utils/constants.js'
+import './index.css';
 
 const cardValidator = new FormValidator(validationObj, cardForm)
 const profileValidator = new FormValidator(validationObj, profileForm)
@@ -29,14 +29,14 @@ cardsList.renderItem();
 
 
 const popupEdit = new PopupWithForm('#profile', {
-  submitAction: ({name,job}) => {
-    userInfo.setUserInfo({name,job});
+  submitAction: ({ name, job }) => {
+    userInfo.setUserInfo({ name, job });
   }
 });
 
 
 const popupAdd = new PopupWithForm('#add-card', {
-  submitAction: ({place,link}) => {
+  submitAction: ({ place, link }) => {
     const createdCard = new Card(place, link, '.template__place', {
       handleCardClick: (image, description) => {
         popupWithImage.open(image, description);
@@ -76,8 +76,5 @@ popUp.forEach(element => {
   });
 })
 
-const validation = () => {
-  cardValidator.enableValidation()
-  profileValidator.enableValidation()
-}
-validation();
+cardValidator.enableValidation()
+profileValidator.enableValidation()
