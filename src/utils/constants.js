@@ -1,14 +1,2 @@
-export const popUpProfile = document.querySelector('#profile')
-export const inputName = popUpProfile.querySelector('.popup__input_name')
-export const inputJob = popUpProfile.querySelector('.popup__input_job')
-export const popUp = document.querySelectorAll('.popup')
-export const popUpAddcard = document.querySelector('#add-card')
-export const inputPlace = popUpAddcard.querySelector('.popup__input_place')
-export const inputPic = popUpAddcard.querySelector('.popup__input_pic')
-export const proFile = document.querySelector('.profile')
-export const addButton = proFile.querySelector('.profile__button')
-export const editButton = proFile.querySelector('.profile__edit')
-export const avaName = proFile.querySelector('.profile__name')
-export const avaJob = proFile.querySelector('.profile__job')
 export const cardForm = '#add-card'
 export const profileForm = '#profile'

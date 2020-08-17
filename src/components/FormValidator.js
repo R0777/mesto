@@ -45,7 +45,10 @@ export default class FormValidator {
         el.classList.contains(this._inputError) ?
           button.classList.add(this._buttonDisabled) :
           button.classList.remove(this._buttonDisabled)
-      } else forms.querySelector(`.${this._formsSelector}`).reset();
+      } else {
+        forms.querySelector(`.${this._formsSelector}`).reset();
+        button.classList.add(this._buttonDisabled);
+      }
     })
   }
 

@@ -6,8 +6,17 @@ import UserInfo from '../components/UserInfo.js';
 import FormValidator from '../components/FormValidator.js'
 import { initialCards } from '../utils/utils.js';
 import { validationObj } from '../components/FormValidator.js';
-import { popUpProfile, popUp, popUpAddcard, addButton, editButton, cardForm, profileForm } from '../utils/constants.js'
+import { cardForm, profileForm } from '../utils/constants.js'
 import './index.css';
+
+const popUpProfile = document.querySelector('#profile')
+const popUp = document.querySelectorAll('.popup')
+const popUpAddcard = document.querySelector('#add-card')
+const proFile = document.querySelector('.profile')
+const addButton = proFile.querySelector('.profile__button')
+const editButton = proFile.querySelector('.profile__edit')
+const nameInput = popUpProfile.querySelector('.popup__input_name'); 
+const jobInput = popUpProfile.querySelector('.popup__input_job'); 
 
 const cardValidator = new FormValidator(validationObj, cardForm)
 const profileValidator = new FormValidator(validationObj, profileForm)
@@ -53,7 +62,10 @@ addButton.addEventListener('click', () => {
 
 editButton.addEventListener('click', () => {
   popupEdit.open();
-  userInfo.setUserInfoInput(userInfo.getUserInfo());
+   //Спасибо за развернутое пояснение. Буду с вами откровенен, я не понимаю почему именно так нужно сделать, а не то как сделал я в предыдущих итерациях. <3
+  const profileInfo = userInfo.getUserInfo();
+  nameInput.value = profileInfo.name
+  jobInput.value = profileInfo.job
   profileValidator.hideErrors(popUpProfile, '#profile');
 });
 
@@ -66,6 +78,12 @@ const userInfo = new UserInfo({
   name: 'profile__name',
   job: 'profile__job'
 });
+
+popupEdit.setEventListeners();
+popupAdd.setEventListeners();
+popupWithImage.setEventListeners();
+
+
 
 popUp.forEach(element => {
   element.addEventListener('click', (event) => {
