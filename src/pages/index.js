@@ -6,8 +6,15 @@ import UserInfo from '../components/UserInfo.js';
 import FormValidator from '../components/FormValidator.js'
 import { initialCards } from '../utils/utils.js';
 import { validationObj } from '../components/FormValidator.js';
-import { popUpProfile, popUp, popUpAddcard, addButton, editButton, cardForm, profileForm } from '../utils/constants.js'
+import { cardForm, profileForm } from '../utils/constants.js'
 import './index.css';
+
+const popUpProfile = document.querySelector('#profile')
+const popUp = document.querySelectorAll('.popup')
+const popUpAddcard = document.querySelector('#add-card')
+const proFile = document.querySelector('.profile')
+const addButton = proFile.querySelector('.profile__button')
+const editButton = proFile.querySelector('.profile__edit')
 
 const cardValidator = new FormValidator(validationObj, cardForm)
 const profileValidator = new FormValidator(validationObj, profileForm)
