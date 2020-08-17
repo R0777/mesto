@@ -60,7 +60,7 @@ addButton.addEventListener('click', () => {
 
 editButton.addEventListener('click', () => {
   popupEdit.open();
-  userInfo.setUserInfoInput(userInfo.getUserInfo());
+  userInfo.setUserInfo(userInfo.getUserInfo());
   profileValidator.hideErrors(popUpProfile, '#profile');
 });
 
