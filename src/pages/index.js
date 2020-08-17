@@ -67,6 +67,12 @@ const userInfo = new UserInfo({
   job: 'profile__job'
 });
 
+popupEdit.setEventListeners();
+popupAdd.setEventListeners();
+popupWithImage.setEventListeners();
+
+
+
 popUp.forEach(element => {
   element.addEventListener('click', (event) => {
     if (event.target !== event.currentTarget) {
