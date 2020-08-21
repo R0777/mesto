@@ -3,7 +3,8 @@ import PopupWithImage from '../components/PopupWithImage.js'
 import Card from '../components/Card.js'
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
-import FormValidator from '../components/FormValidator.js'
+import FormValidator from '../components/FormValidator.js';
+import Api from '../components/Api.js'
 import { initialCards } from '../utils/utils.js';
 import { validationObj } from '../components/FormValidator.js';
 import { cardForm, profileForm } from '../utils/constants.js'
@@ -14,6 +15,9 @@ const popUp = document.querySelectorAll('.popup')
 const popUpAddcard = document.querySelector('#add-card')
 const proFile = document.querySelector('.profile')
 const addButton = proFile.querySelector('.profile__button')
+const profileName = proFile.querySelector('.profile__name')
+const profileJob = proFile.querySelector('.profile__job')
+const profileAvatar = proFile.querySelector('.profile__avatar')
 const editButton = proFile.querySelector('.profile__edit')
 const nameInput = popUpProfile.querySelector('.popup__input_name'); 
 const jobInput = popUpProfile.querySelector('.popup__input_job'); 
@@ -21,39 +25,84 @@ const jobInput = popUpProfile.querySelector('.popup__input_job');
 const cardValidator = new FormValidator(validationObj, cardForm)
 const profileValidator = new FormValidator(validationObj, profileForm)
 
-const cardsList = new Section({
-  items: initialCards,
-  renderer: (el) => {
-    const newCard = new Card(el.name, el.link, '.template__place', {
-      handleCardClick: (link, name) => {
-        popupWithImage.open(link, name)
-      }
-    });
-    const cardElement = newCard.generateCard();
-    cardsList.addItem(cardElement)
-  },
-}, '.places')
-
-cardsList.renderItem();
-
-
-const popupEdit = new PopupWithForm('#profile', {
-  submitAction: ({ name, job }) => {
-    userInfo.setUserInfo({ name, job });
+const profileApi = new Api({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-14/users/me',
+  headers: {
+    authorization: '2078e82d-f04d-4fd6-8014-7e1fe1782828',
+    'Content-Type': 'application/json'
   }
 });
 
+const cardsApi = new Api({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-14/cards',
+  headers: {
+    authorization: '2078e82d-f04d-4fd6-8014-7e1fe1782828',
+    'Content-Type': 'application/json'
+  }
+});
+
+profileApi.getProfile()
+.then(res => {
+  profileName.textContent = res.name;
+  profileJob.textContent = res.about;
+  profileAvatar.src = res.avatar;
+})
+
+cardsApi.getInitialCards()
+.then(res => {
+  const cardsList = new Section({
+    items: res,
+    renderer: (el) => {
+      const newCard = new Card(el.name, el.link, '.template__place', {
+        handleCardClick: (link, name) => {
+          popupWithImage.open(link, name)
+        }
+      });
+      const cardElement = newCard.generateCard();
+      cardsList.addItem(cardElement)
+    },
+  }, '.places')
+  
+  cardsList.renderItem();
+})
+
+
+const popupEdit = new PopupWithForm('#profile', {
+  submitAction: ({ name, about }) => {
+    profileApi.setProfile(name, about)
+    .then(res => {
+      userInfo.setUserInfo(res);
+    })
+  }
+}); 
 
 const popupAdd = new PopupWithForm('#add-card', {
   submitAction: ({ place, link }) => {
-    const createdCard = new Card(place, link, '.template__place', {
-      handleCardClick: (image, description) => {
-        popupWithImage.open(image, description);
-      }
-    }).generateCard();
-    cardsList.addItem(createdCard);
-  }
+    cardsApi.setCard(place, link)
+.then(res => {
+  const createdCard = new Card(res.name, res.link, '.template__place', {
+    handleCardClick: (image, description) => {
+      popupWithImage.open(image, description);
+    }
+  }).generateCard();
+  
+  new Section({
+    items: res,
+    renderer: (el) => {
+      const newCard = new Card(el.name, el.link, '.template__place', {
+        handleCardClick: (link, name) => {
+          popupWithImage.open(link, name)
+        }
+      });
+      const cardElement = newCard.generateCard();
+      cardsList.addItem(cardElement)
+    },
+  }, '.places').addItem(createdCard);
 })
+}
+})
+
+
 
 addButton.addEventListener('click', () => {
   popupAdd.open();
@@ -62,10 +111,9 @@ addButton.addEventListener('click', () => {
 
 editButton.addEventListener('click', () => {
   popupEdit.open();
-   //Спасибо за развернутое пояснение. Буду с вами откровенен, я не понимаю почему именно так нужно сделать, а не то как сделал я в предыдущих итерациях. <3
   const profileInfo = userInfo.getUserInfo();
   nameInput.value = profileInfo.name
-  jobInput.value = profileInfo.job
+  jobInput.value = profileInfo.about
   profileValidator.hideErrors(popUpProfile, '#profile');
 });
 
@@ -76,7 +124,7 @@ const popupWithImage = new PopupWithImage('#bigimg', {
 
 const userInfo = new UserInfo({
   name: 'profile__name',
-  job: 'profile__job'
+  about: 'profile__job'
 });
 
 popupEdit.setEventListeners();
