@@ -1,8 +1,5 @@
 export default class Api {
-  constructor({
-    url,
-    headers
-  }) {
+  constructor({url, headers}) {
     this._url = url;
     this._headers = headers;
   }
@@ -42,6 +39,60 @@ export default class Api {
       })
   }
 
+  deleteCard(id) {
+    return fetch(`${this._url}/${id}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Опаньки, инфо удаление карточки не пришло: ${res.status}`);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+}
+
+
+addLike(id) {
+  return fetch(`${this._url}/${id}`, {
+    method: 'PUT',
+    headers: this._headers,
+  })
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Опаньки, инфо удаление карточки не пришло: ${res.status}`);
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+}
+
+minusLike(id) {
+  return fetch(`${this._url}/${id}`, {
+    method: 'PUT',
+    headers: this._headers,
+  })
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Опаньки, инфо удаление карточки не пришло: ${res.status}`);
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+}
+
+
+
+
+
+
   getProfile() {
     return fetch(this._url, {
         headers: this._headers
@@ -76,4 +127,28 @@ export default class Api {
         console.log(err);
       })
   }
+
+  profileAvatar(avalink) {
+    return fetch(this._url, {
+        method: 'PATCH',
+        headers: this._headers,
+        body: JSON.stringify({
+          avatar: avalink
+        })
+      })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Опаньки, инфо из профайла не пришло: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+
+
+
+
 }

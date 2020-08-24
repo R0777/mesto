@@ -52,6 +52,24 @@
         <button class="popup__save" type="submit">Создать</button>
       </form>
     </section>
+    <section class="popup" id="new-avatar">
+      <form class="popup__block" novalidate>
+        <button class="popup__close" type="button"></button>
+        <h4 class="popup__title">Обновить аватар</h4>
+        <label class="popup__field">
+        <input type="url" class="popup__input popup__input_place" id='avatar-input' name="avatar" value="" placeholder="Ссылка на картинку" required>
+        <span class='popup__input-error' id='avatar-input-error'></span>
+        </label>
+        <button class="popup__save" type="submit">Сохранить</button>
+      </form>
+    </section>
+    <section class="popup" id="remove-card">
+      <form class="popup__block" novalidate>
+        <button class="popup__close" type="button"></button>
+        <h4 class="popup__title">Вы уверены?</h4>
+        <button class="popup__save" type="submit">Угу</button>
+      </form>
+    </section>
     <section class="popup" id="bigimg">
       <figure class="popup__block-big">
         <button class="popup__close" type="button"></button>
@@ -71,7 +89,7 @@
       <img src="#" alt="#" class="card__pic">
       <button class="card__trash"></button>
       <figcaption class="card__text">
-        <h4 class="card__name"></h4><button type="button" class="card__like"></button>
+        <h4 class="card__name"></h4><div class="card__like-block"><button type="button" class="card__like"></button><p class="card__like-number">0</p></div>
       </figcaption>
     </figure>
   </template>
