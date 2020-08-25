@@ -1,10 +1,12 @@
 export default class Card {
-  constructor(name, link, likes, cardTemplate, { handleCardClick }) {
+  constructor(name, link, likes, id, cardTemplate, { handleCardClick }, {handleLikeClick}) {
     this._name = name;
       this._link = link;
       this._likes = likes;
+      this._id = id;
       this._template = cardTemplate;
       this._handleCardClick = handleCardClick;
+      this._handleLikeClick = handleLikeClick;
   }
 
   _getTemplate() {
@@ -15,22 +17,18 @@ export default class Card {
     return this._element = cardElement;
   }
 
-  _submitClickTrash() {
-    this._element.querySelector('.card__pic').removeEventListener('click', this._openPopBig);
-    this._element.querySelector('.card__like').removeEventListener('click', this._clickLike);
-    this._element.querySelector('.card__trash').removeEventListener('click', this._submitClickTrash);
-    this._element.remove();
-    this._element = null
-  }
-
   _clickLike() {
     this._element.querySelector('.card__like').classList.toggle('card__like_active')
   }
 
   _setEventListeners = () => {
     this._element.querySelector('.card__like').addEventListener('click', () => {
-      this._clickLike();
+      this._handleLikeClick(this._id, this._element);
     });
+
+      this._element.querySelector('.card__like').addEventListener('click', () => {
+        this._clickLike();
+      });
 
     this._element.querySelector('.card__pic').addEventListener('click', () => {
       this._handleCardClick(this._link, this._name);

@@ -1,5 +1,8 @@
 export default class Api {
-  constructor({url, headers}) {
+  constructor({
+    url,
+    headers
+  }) {
     this._url = url;
     this._headers = headers;
   }
@@ -41,56 +44,52 @@ export default class Api {
 
   deleteCard(id) {
     return fetch(`${this._url}/${id}`, {
-      method: 'DELETE',
-      headers: this._headers,
-    })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Опаньки, инфо удаление карточки не пришло: ${res.status}`);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-}
+        method: 'DELETE',
+        headers: this._headers,
+      })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Опаньки, инфо удаление карточки не пришло: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
 
 
-addLike(id) {
-  return fetch(`${this._url}/${id}`, {
-    method: 'PUT',
-    headers: this._headers,
-  })
-  .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Опаньки, инфо удаление карточки не пришло: ${res.status}`);
-  })
-  .catch((err) => {
-    console.log(err);
-  })
-}
+  addLike(id) {
+    return fetch(`${this._url}/likes/${id}`, {
+        method: 'PUT',
+        headers: this._headers,
+      })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Опаньки, лайк карточки не добавился: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
 
-minusLike(id) {
-  return fetch(`${this._url}/${id}`, {
-    method: 'PUT',
-    headers: this._headers,
-  })
-  .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Опаньки, инфо удаление карточки не пришло: ${res.status}`);
-  })
-  .catch((err) => {
-    console.log(err);
-  })
-}
-
-
-
-
+  unLike(id) {
+    return fetch(`${this._url}/likes/${id}`, {
+        method: 'DELETE',
+        headers: this._headers,
+      })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Опаньки, минус лайк карточки не получился: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
 
 
   getProfile() {
@@ -109,6 +108,7 @@ minusLike(id) {
   }
 
   setProfile(name, about) {
+
     return fetch(this._url, {
         method: 'PATCH',
         headers: this._headers,
@@ -146,9 +146,4 @@ minusLike(id) {
         console.log(err);
       })
   }
-
-
-
-
-
 }

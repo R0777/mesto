@@ -5,9 +5,17 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import FormValidator from '../components/FormValidator.js';
 import Api from '../components/Api.js'
-import { initialCards } from '../utils/utils.js';
-import { validationObj } from '../components/FormValidator.js';
-import { cardForm, profileForm, avatarForm } from '../utils/constants.js'
+import {
+  initialCards
+} from '../utils/utils.js';
+import {
+  validationObj
+} from '../components/FormValidator.js';
+import {
+  cardForm,
+  profileForm,
+  avatarForm
+} from '../utils/constants.js'
 import './index.css';
 import Popup from '../components/Popup.js';
 
@@ -15,14 +23,14 @@ const popUpProfile = document.querySelector('#profile')
 const popUp = document.querySelectorAll('.popup')
 const popUpAddcard = document.querySelector('#add-card')
 const popUpNewAvatar = document.querySelector('#new-avatar')
-// const popUpRemovecard = document.querySelector('#remove-card')
+const popUpRemovecard = document.querySelector('#remove-card')
 const proFile = document.querySelector('.profile')
 const addButton = proFile.querySelector('.profile__button')
 const profileName = proFile.querySelector('.profile__name')
 const profileJob = proFile.querySelector('.profile__job')
 const profileAvatar = proFile.querySelector('.profile__avatar-img')
 const editButton = proFile.querySelector('.profile__edit')
-const nameInput = popUpProfile.querySelector('.popup__input_name'); 
+const nameInput = popUpProfile.querySelector('.popup__input_name');
 const jobInput = popUpProfile.querySelector('.popup__input_job');
 let idProfile
 
@@ -58,90 +66,206 @@ const cardsApi = new Api({
 
 
 profileApi.getProfile()
-.then(res => {
-  profileName.textContent = res.name;
-  profileJob.textContent = res.about;
-  profileAvatar.src = res.avatar;
-})
+  .then(res => {
+    profileName.textContent = res.name;
+    profileJob.textContent = res.about;
+    profileAvatar.src = res.avatar;
+    idProfile = res._id;
+  })
 
 cardsApi.getInitialCards()
-.then(res => {
-  const cardsList = new Section({
-    items: res,
-    renderer: (el) => {
-      const newCard = new Card(el.name, el.link, el.likes, '.template__place', {
-        handleCardClick: (link, name) => {
-          popupWithImage.open(link, name)
-        }
-      });
+  .then(res => {
+    const cardsList = new Section({
+      items: res,
+      renderer: (el) => {
+        const newCard = new Card(el.name, el.link, el.likes, el._id, '.template__place', {
+          handleCardClick: (link, name) => {
+            popupWithImage.open(link, name)
+          }
+        }, {
+          handleLikeClick: (cardId, cardElement) => {
+            cardsApi.addLike(cardId)
+              .then(res => {
+                cardElement.querySelector('.card__like-number').textContent = res.likes.length;
+                if (!cardElement.querySelector('.card__like').classList.contains('card__like_active')) {
+                  cardsApi.unLike(cardId)
+                    .then(res => {
+                      cardElement.querySelector('.card__like-number').textContent = res.likes.length;
+                    })
+                }
+              })
+          }
+        })
 
-if (idProfile !== el.owner._id) {
-  
-      const cardElement = newCard.generateCard('id');
-      cardsList.addItem(cardElement)
+        if (idProfile !== el.owner._id) {
+
+          const cardElement = newCard.generateCard('id');
+          cardsList.addItem(cardElement)
+          if (el.likes.find((elem) => elem._id === idProfile)) {
+            cardElement.querySelector('.card__like').classList.add('card__like_active')
+          }
+        } else {
+          const cardElement = newCard.generateCard();
+          cardsList.addItem(cardElement)
+          const trashBin = document.querySelector('.card__trash')
+          trashBin.addEventListener('click', () => {
+            popUpTrash.open();
+            popUpTrash.setEventListeners();
+            popUpRemovecard.addEventListener('submit', (event) => {
+              event.preventDefault();
+              cardsApi.deleteCard(el._id)
+                .then(res => {
+                  cardElement.remove();
+                  popUpTrash.close();
+                })
+            })
+          })
+          if (el.likes.find((elem) => elem._id === idProfile)) {
+            cardElement.querySelector('.card__like').classList.add('card__like_active')
+          }
+        }
+      },
+    }, '.places')
+
+    cardsList.renderItem();
+
+  })
+
+
+const renderLoading = (isLoading) => {
+  const buttonText = document.querySelector('.popup__save')
+  if (isLoading) {
+    buttonText.textContent = 'Сохранение...';
+  } else {
+    buttonText.textContent = 'Сохранить';
+  }
 }
-else {
-  const cardElement = newCard.generateCard();
-  cardsList.addItem(cardElement)
-  const trashBin = document.querySelector('.card__trash')
-  trashBin.addEventListener('click', () => {
-  popUpTrash.open();
-  popUpTrash.setEventListeners();
-})
-}
-  },
-  }, '.places')
-  
-  cardsList.renderItem();
-})
+
+
 
 const popupEdit = new PopupWithForm('#profile', {
-  submitAction: ({ name, about}) => {
+  submitAction: ({
+    name,
+    about
+  }) => {
+    renderLoading(true)
     profileApi.setProfile(name, about)
-    .then(res => {
-      userInfo.setUserInfo(res);
-    })
+      .then(res => {
+        userInfo.setUserInfo(res);
+      })
+      .finally(err => {
+        renderLoading(false)
+      })
   }
-}); 
+});
 
 
 const newAvatar = new PopupWithForm('#new-avatar', {
-  submitAction: ({avatar}) => {
+  submitAction: ({
+    avatar
+  }) => {
+    renderLoading(true)
     avatarApi.profileAvatar(avatar)
-    .then(res => {
-      userInfo.setUserInfo(res)
-    })
+      .then(res => {
+        userInfo.setUserInfo(res)
+      })
+      .finally(err => {
+        renderLoading(false)
+      })
   }
 })
 
 
 
 const popupAdd = new PopupWithForm('#add-card', {
-  submitAction: ({ place, link }) => {
+  submitAction: ({place,link}) => {
+    renderLoading(true)
     cardsApi.setCard(place, link)
-.then(res => {
-  const createdCard = new Card(res.name, res.link, res.likes, '.template__place', {
-    handleCardClick: (image, description) => {
-      popupWithImage.open(image, description);
-    }
-  }).generateCard();
-  
-  new Section({
-    items: res,
-    renderer: (el) => {
-      const newCard = new Card(el.name, el.link, res.likes, '.template__place', {
-        handleCardClick: (link, name) => {
-          popupWithImage.open(link, name)
-        }
-      });
-      const cardElement = newCard.generateCard();
-      cardsList.addItem(cardElement)
+      .then(res => {
 
-    },
-  }, '.places').addItem(createdCard);
+        const createdCard = new Card(res.name, res.link, res.likes, res._id, '.template__place', {
+            handleCardClick: (image, description) => {
+              popupWithImage.open(image, description);
+            }
+          }, {
+            handleLikeClick: (cardId, cardElement) => {
+              cardsApi.addLike(cardId)
+                .then(res => {
+                  cardElement.querySelector('.card__like-number').textContent = res.likes.length;
+                  if (!cardElement.querySelector('.card__like').classList.contains('card__like_active')) {
+                    cardsApi.unLike(cardId)
+                      .then(res => {
+                        cardElement.querySelector('.card__like-number').textContent = res.likes.length;
+                      })
+                  }
+                })
+            }
+          }).generateCard();
+
+        new Section({
+          items: res,
+          renderer: (el) => {
+            const newCard = new Card(el.name, el.link, el.likes, el._id, '.template__place', {
+              handleCardClick: (link, name) => {
+                popupWithImage.open(link, name)
+              }
+            }, {
+              handleLikeClick: (cardId, cardElement) => {
+                cardsApi.addLike(cardId)
+                  .then(res => {
+                    cardElement.querySelector('.card__like-number').textContent = res.likes.length;
+                    if (!cardElement.querySelector('.card__like').classList.contains('card__like_active')) {
+                      cardsApi.unLike(cardId)
+                        .then(res => {
+                          cardElement.querySelector('.card__like-number').textContent = res.likes.length;
+                        })
+                    }
+                  })
+              }
+            });
+            console.log(el)
+            console.log(dProfile)
+            if (idProfile !== el.owner._id) {
+
+              const cardElement = newCard.generateCard('id');
+              cardsList.addItem(cardElement)
+              if (el.likes.find((elem) => elem._id === idProfile)) {
+                cardElement.querySelector('.card__like').classList.add('card__like_active')
+              }
+            } else {
+              const cardElement = newCard.generateCard();
+              cardsList.addItem(cardElement)
+              const trashBin = document.querySelector('.card__trash')
+              trashBin.addEventListener('click', () => {
+                popUpTrash.open();
+                popUpTrash.setEventListeners();
+                popUpRemovecard.addEventListener('submit', (event) => {
+                  event.preventDefault();
+                  cardsApi.deleteCard(el._id)
+                    .then(res => {
+                      cardElement.remove();
+                      popUpTrash.close();
+                    })
+                })
+              })
+              if (el.likes.find((elem) => elem._id === idProfile)) {
+                cardElement.querySelector('.card__like').classList.add('card__like_active')
+              }
+            }
+
+            const cardElement = newCard.generateCard();
+            cardsList.addItem(cardElement)
+
+          },
+        }, '.places').addItem(createdCard);
+      })
+      .finally(err => {
+        renderLoading(false)
+      })
+
+  }
 })
-}
-})
+
 
 addButton.addEventListener('click', () => {
   popupAdd.open();
