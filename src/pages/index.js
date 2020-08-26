@@ -40,32 +40,15 @@ const avatarValidator = new FormValidator(validationObj, avatarForm)
 
 const popUpTrash = new Popup('#remove-card')
 
-const profileApi = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-14/users/me',
+const api = new Api({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-14',
   headers: {
     authorization: '2078e82d-f04d-4fd6-8014-7e1fe1782828',
     'Content-Type': 'application/json'
   }
 });
 
-const avatarApi = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-14/users/me/avatar',
-  headers: {
-    authorization: '2078e82d-f04d-4fd6-8014-7e1fe1782828',
-    'Content-Type': 'application/json'
-  }
-});
-
-const cardsApi = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-14/cards',
-  headers: {
-    authorization: '2078e82d-f04d-4fd6-8014-7e1fe1782828',
-    'Content-Type': 'application/json'
-  }
-});
-
-
-profileApi.getProfile()
+api.getProfile()
   .then(res => {
     profileName.textContent = res.name;
     profileJob.textContent = res.about;
@@ -73,64 +56,71 @@ profileApi.getProfile()
     idProfile = res._id;
   })
 
-cardsApi.getInitialCards()
-  .then(res => {
+  function cardsList(res) {
     const cardsList = new Section({
       items: res,
       renderer: (el) => {
-        const newCard = new Card(el.name, el.link, el.likes, el._id, '.template__place', {
-          handleCardClick: (link, name) => {
-            popupWithImage.open(link, name)
-          }
-        }, {
-          handleLikeClick: (cardId, cardElement) => {
-            cardsApi.addLike(cardId)
-              .then(res => {
-                cardElement.querySelector('.card__like-number').textContent = res.likes.length;
-                if (!cardElement.querySelector('.card__like').classList.contains('card__like_active')) {
-                  cardsApi.unLike(cardId)
-                    .then(res => {
-                      cardElement.querySelector('.card__like-number').textContent = res.likes.length;
-                    })
-                }
-              })
-          }
-        })
-
-        if (idProfile !== el.owner._id) {
-
-          const cardElement = newCard.generateCard('id');
-          cardsList.addItem(cardElement)
-          if (el.likes.find((elem) => elem._id === idProfile)) {
-            cardElement.querySelector('.card__like').classList.add('card__like_active')
-          }
-        } else {
-          const cardElement = newCard.generateCard();
-          cardsList.addItem(cardElement)
-          const trashBin = document.querySelector('.card__trash')
-          trashBin.addEventListener('click', () => {
-            popUpTrash.open();
-            popUpTrash.setEventListeners();
-            popUpRemovecard.addEventListener('submit', (event) => {
-              event.preventDefault();
-              cardsApi.deleteCard(el._id)
-                .then(res => {
-                  cardElement.remove();
-                  popUpTrash.close();
-                })
-            })
-          })
-          if (el.likes.find((elem) => elem._id === idProfile)) {
-            cardElement.querySelector('.card__like').classList.add('card__like_active')
-          }
-        }
+        newCard(el);
       },
     }, '.places')
 
-    cardsList.renderItem();
+    return cardsList
+  }
 
+function newCard(el) {
+  const newCard = new Card(el.name, el.link, el.likes, el._id, '.template__place', {
+    handleCardClick: (image, description) => {
+      popupWithImage.open(image, description);
+    }
+  }, {
+    handleLikeClick: (cardId, cardElement) => {
+      api.addLike(cardId)
+        .then(res => {
+          cardElement.querySelector('.card__like-number').textContent = res.likes.length;
+          if (!cardElement.querySelector('.card__like').classList.contains('card__like_active')) {
+            api.unLike(cardId)
+              .then(res => {
+                cardElement.querySelector('.card__like-number').textContent = res.likes.length;
+              })
+          }
+        })
+    }
   })
 
+  if (idProfile !== el.owner._id) {
+    const ifCardElement = newCard.generateCard('id');
+    cardsList(el).addItem(ifCardElement)
+    if (el.likes.find((elem) => elem._id === idProfile)) {
+      ifCardElement.querySelector('.card__like').classList.add('card__like_active')
+    }
+  } else {
+    const elseCardElement = newCard.generateCard();
+    cardsList(el).addItem(elseCardElement)
+    const trashBin = document.querySelector('.card__trash')
+    trashBin.addEventListener('click', () => {
+      popUpTrash.open();
+      popUpTrash.setEventListeners();
+      popUpRemovecard.addEventListener('submit', (event) => {
+        event.preventDefault();
+        api.deleteCard(el._id)
+          .then(res => {
+            elseCardElement.remove();
+            popUpTrash.close();
+          })
+      })
+    })
+    if (el.likes.find((elem) => elem._id === idProfile)) {
+      elseCardElement.querySelector('.card__like').classList.add('card__like_active')
+    }
+  }
+  return newCard
+}
+
+
+  api.getInitialCards()
+  .then(res => {
+    cardsList(res).renderItem();
+  })
 
 const renderLoading = (isLoading) => {
   const buttonText = document.querySelector('.popup__save')
@@ -141,15 +131,13 @@ const renderLoading = (isLoading) => {
   }
 }
 
-
-
 const popupEdit = new PopupWithForm('#profile', {
   submitAction: ({
     name,
     about
   }) => {
     renderLoading(true)
-    profileApi.setProfile(name, about)
+    api.setProfile(name, about)
       .then(res => {
         userInfo.setUserInfo(res);
       })
@@ -159,13 +147,12 @@ const popupEdit = new PopupWithForm('#profile', {
   }
 });
 
-
 const newAvatar = new PopupWithForm('#new-avatar', {
   submitAction: ({
     avatar
   }) => {
     renderLoading(true)
-    avatarApi.profileAvatar(avatar)
+    api.profileAvatar(avatar)
       .then(res => {
         userInfo.setUserInfo(res)
       })
@@ -175,94 +162,19 @@ const newAvatar = new PopupWithForm('#new-avatar', {
   }
 })
 
-
-
 const popupAdd = new PopupWithForm('#add-card', {
-  submitAction: ({place,link}) => {
+  submitAction: ({
+    place,
+    link
+  }) => {
     renderLoading(true)
-    cardsApi.setCard(place, link)
-      .then(res => {
-
-        const createdCard = new Card(res.name, res.link, res.likes, res._id, '.template__place', {
-            handleCardClick: (image, description) => {
-              popupWithImage.open(image, description);
-            }
-          }, {
-            handleLikeClick: (cardId, cardElement) => {
-              cardsApi.addLike(cardId)
-                .then(res => {
-                  cardElement.querySelector('.card__like-number').textContent = res.likes.length;
-                  if (!cardElement.querySelector('.card__like').classList.contains('card__like_active')) {
-                    cardsApi.unLike(cardId)
-                      .then(res => {
-                        cardElement.querySelector('.card__like-number').textContent = res.likes.length;
-                      })
-                  }
-                })
-            }
-          }).generateCard();
-
-        new Section({
-          items: res,
-          renderer: (el) => {
-            const newCard = new Card(el.name, el.link, el.likes, el._id, '.template__place', {
-              handleCardClick: (link, name) => {
-                popupWithImage.open(link, name)
-              }
-            }, {
-              handleLikeClick: (cardId, cardElement) => {
-                cardsApi.addLike(cardId)
-                  .then(res => {
-                    cardElement.querySelector('.card__like-number').textContent = res.likes.length;
-                    if (!cardElement.querySelector('.card__like').classList.contains('card__like_active')) {
-                      cardsApi.unLike(cardId)
-                        .then(res => {
-                          cardElement.querySelector('.card__like-number').textContent = res.likes.length;
-                        })
-                    }
-                  })
-              }
-            });
-            console.log(el)
-            console.log(dProfile)
-            if (idProfile !== el.owner._id) {
-
-              const cardElement = newCard.generateCard('id');
-              cardsList.addItem(cardElement)
-              if (el.likes.find((elem) => elem._id === idProfile)) {
-                cardElement.querySelector('.card__like').classList.add('card__like_active')
-              }
-            } else {
-              const cardElement = newCard.generateCard();
-              cardsList.addItem(cardElement)
-              const trashBin = document.querySelector('.card__trash')
-              trashBin.addEventListener('click', () => {
-                popUpTrash.open();
-                popUpTrash.setEventListeners();
-                popUpRemovecard.addEventListener('submit', (event) => {
-                  event.preventDefault();
-                  cardsApi.deleteCard(el._id)
-                    .then(res => {
-                      cardElement.remove();
-                      popUpTrash.close();
-                    })
-                })
-              })
-              if (el.likes.find((elem) => elem._id === idProfile)) {
-                cardElement.querySelector('.card__like').classList.add('card__like_active')
-              }
-            }
-
-            const cardElement = newCard.generateCard();
-            cardsList.addItem(cardElement)
-
-          },
-        }, '.places').addItem(createdCard);
+    api.setCard(place, link)
+      .then(el => {
+        newCard(el)
       })
       .finally(err => {
         renderLoading(false)
       })
-
   }
 })
 

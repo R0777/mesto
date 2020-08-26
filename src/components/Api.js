@@ -8,7 +8,7 @@ export default class Api {
   }
 
   getInitialCards() {
-    return fetch(this._url, {
+    return fetch(`${this._url}/cards`, {
         headers: this._headers
       })
       .then((res) => {
@@ -23,7 +23,7 @@ export default class Api {
   }
 
   setCard(place, link) {
-    return fetch(this._url, {
+    return fetch(`${this._url}/cards`, {
         method: 'POST',
         headers: this._headers,
         body: JSON.stringify({
@@ -31,11 +31,11 @@ export default class Api {
           link: link
         })
       })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
+      .then((el) => {
+        if (el.ok) {
+          return el.json();
         }
-        return Promise.reject(`Опаньки, инфо карточки не пришло: ${res.status}`);
+        return Promise.reject(`Опаньки, инфо карточки не пришло: ${el.status}`);
       })
       .catch((err) => {
         console.log(err);
@@ -43,7 +43,7 @@ export default class Api {
   }
 
   deleteCard(id) {
-    return fetch(`${this._url}/${id}`, {
+    return fetch(`${this._url}/cards/${id}`, {
         method: 'DELETE',
         headers: this._headers,
       })
@@ -60,7 +60,7 @@ export default class Api {
 
 
   addLike(id) {
-    return fetch(`${this._url}/likes/${id}`, {
+    return fetch(`${this._url}/cards/likes/${id}`, {
         method: 'PUT',
         headers: this._headers,
       })
@@ -76,7 +76,7 @@ export default class Api {
   }
 
   unLike(id) {
-    return fetch(`${this._url}/likes/${id}`, {
+    return fetch(`${this._url}/cards/likes/${id}`, {
         method: 'DELETE',
         headers: this._headers,
       })
@@ -93,7 +93,7 @@ export default class Api {
 
 
   getProfile() {
-    return fetch(this._url, {
+    return fetch(`${this._url}/users/me`, {
         headers: this._headers
       })
       .then((res) => {
@@ -109,7 +109,7 @@ export default class Api {
 
   setProfile(name, about) {
 
-    return fetch(this._url, {
+    return fetch(`${this._url}/users/me`, {
         method: 'PATCH',
         headers: this._headers,
         body: JSON.stringify({
@@ -129,7 +129,7 @@ export default class Api {
   }
 
   profileAvatar(avalink) {
-    return fetch(this._url, {
+    return fetch(`${this._url}/users/me/avatar`, {
         method: 'PATCH',
         headers: this._headers,
         body: JSON.stringify({
