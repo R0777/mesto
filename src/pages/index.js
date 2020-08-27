@@ -1,5 +1,9 @@
-import { validationObj } from '../utils/constants.js';
-import { renderLoading } from '../utils/utils.js';
+import {
+  validationObj
+} from '../utils/constants.js';
+import {
+  renderLoading
+} from '../utils/utils.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import Card from '../components/Card.js';
@@ -56,16 +60,16 @@ api.getProfile()
     console.log(err);
   })
 
-  function cardsList(res) {
-    const cardsList = new Section({
-      items: res,
-      renderer: (el) => {
-        newCard(el);
-      },
-    }, '.places')
+function cardsList(res) {
+  const cardsList = new Section({
+    items: res,
+    renderer: (el) => {
+      newCard(el);
+    },
+  }, '.places')
 
-    return cardsList
-  }
+  return cardsList
+}
 
 function newCard(el) {
   const newCard = new Card(el.name, el.link, el.likes, el._id, idProfile, '.template__place', {
@@ -91,25 +95,23 @@ function newCard(el) {
           console.log(err);
         })
     }
-  },{
-    deleteCardTrash: (cardElement, cardId) => {      
-        popUpTrash.open();
-        popUpTrash.setEventListeners();
-        popUpRemovecard.addEventListener('submit', (event) => {
-          event.preventDefault();
-          api.deleteCard(cardId)
-            .then(res => {
-              cardElement.remove();
-              popUpTrash.close();
-            })
-            .catch((err) => {
-              console.log(err);
-            })
-        })
-      
+  }, {
+    deleteCardTrash: (cardElement, cardId) => {
+      popUpTrash.open();
+      popUpTrash.setEventListeners();
+      popUpRemovecard.addEventListener('submit', (event) => {
+        event.preventDefault();
+        api.deleteCard(cardId)
+          .then(res => {
+            cardElement.remove();
+            popUpTrash.close();
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      })
     }
-  }
-  )
+  })
 
   if (idProfile !== el.owner._id) {
     const ifCardElement = newCard.generateCard('id');
@@ -123,11 +125,11 @@ function newCard(el) {
 }
 
 Promise.all([
-  api.getProfile(),
-  api.getInitialCards()
-])
-.then(res => {
-  const [userProfile, initialCards] = res
+    api.getProfile(),
+    api.getInitialCards()
+  ])
+  .then(res => {
+    const [userProfile, initialCards] = res
     cardsList(initialCards).renderItem();
     idProfile = userProfile._id
   })
@@ -191,6 +193,14 @@ const popupAdd = new PopupWithForm('#add-card', {
   }
 })
 
+popUp.forEach(element => {
+  element.addEventListener('click', (event) => {
+    if (event.target !== event.currentTarget) {
+      return
+    }
+    element.classList.remove('active')
+  });
+})
 
 addButton.addEventListener('click', () => {
   popupAdd.open();
@@ -225,17 +235,6 @@ popupEdit.setEventListeners();
 popupAdd.setEventListeners();
 popupWithImage.setEventListeners();
 newAvatar.setEventListeners()
-
-
-
-popUp.forEach(element => {
-  element.addEventListener('click', (event) => {
-    if (event.target !== event.currentTarget) {
-      return
-    }
-    element.classList.remove('active')
-  });
-})
 
 cardValidator.enableValidation();
 profileValidator.enableValidation();
