@@ -67,7 +67,7 @@ api.getProfile()
   }
 
 function newCard(el) {
-  const newCard = new Card(el.name, el.link, el.likes, el._id, '.template__place', {
+  const newCard = new Card(el.name, el.link, el.likes, el._id, el.owner._id, idProfile, '.template__place', {
     handleCardClick: (image, description) => {
       popupWithImage.open(image, description);
     }
@@ -75,11 +75,11 @@ function newCard(el) {
     handleLikeClick: (cardId, cardElement) => {
       api.addLike(cardId)
         .then(res => {
-          cardElement.querySelector('.card__like-number').textContent = res.likes.length;
+          cardElement.querySelector('.card__like-number').textContent = newCard.countLikes(res);
           if (!cardElement.querySelector('.card__like').classList.contains('card__like_active')) {
             api.unLike(cardId)
               .then(res => {
-                cardElement.querySelector('.card__like-number').textContent = newCard.countLikes();
+                cardElement.querySelector('.card__like-number').textContent = newCard.countLikes(res);
               })
               .catch((err) => {
                 console.log(err);
@@ -92,22 +92,12 @@ function newCard(el) {
     }
   })
 
-// Уважаемая ревьюер, Арина.
-// Мне непонятны ваши три однотипных замечания в index.js а именно
-// 'Все операции над DOM должны быть включены внутрь цепочки промисов, т.е изменение иконки лайка с неактивной на активную и наоборот должно происходить только после успешного ответа сервера и любые другие манипуляции с DOM должны производится  только после получения ответа от сервера.'
-// Я не могу с вами согласиться, т.к. все мои манипуляции с DOM исключительно только внутри then.
-// https://yadi.sk/i/8O--IVmfBC7-ag вот ссылочка на видео, демонстрирующая что происходит когда все корректно с запросом и когда в нем ошибка.
-// Если вы посмотрите на новый запрос Promise.all при отрисовке карточек с сервера то 1. идет запрос на сервер 2. проверка ответа и преобразование в json (это все в рамках метода в классе Api далее return и продолжение цепочки, но уже в файле index.js) 3. моя работа с DOM (вызов функции cardsList которая принимает json итд.) Если я вас не так понял прошу объяснить подробнее. Спасибо!
-
-
-
-
   if (idProfile !== el.owner._id) {
     const ifCardElement = newCard.generateCard('id');
     cardsList(el).addItem(ifCardElement)
-    if (el.likes.find((elem) => elem._id === idProfile)) {
-      ifCardElement.querySelector('.card__like').classList.add('card__like_active')
-    }
+    // if (el.likes.find((elem) => elem._id === idProfile)) {
+    //   ifCardElement.querySelector('.card__like').classList.add('card__like_active')
+    // }
   } else {
     const elseCardElement = newCard.generateCard();
     cardsList(el).addItem(elseCardElement)
