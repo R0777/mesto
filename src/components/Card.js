@@ -1,9 +1,11 @@
 export default class Card {
-  constructor(name, link, likes, id, cardTemplate, { handleCardClick }, {handleLikeClick}) {
+  constructor(name, link, likes, id, ownerid, idprofile, cardTemplate, { handleCardClick }, {handleLikeClick}) {
     this._name = name;
       this._link = link;
       this._likes = likes;
       this._id = id;
+      this._ownerid = ownerid;
+      this._idProfile = idprofile;
       this._template = cardTemplate;
       this._handleCardClick = handleCardClick;
       this._handleLikeClick = handleLikeClick;
@@ -35,7 +37,10 @@ export default class Card {
     });
   }
 
-  countLikes() {
+  countLikes(res) {
+    if(res)  {
+    this._likes = res.likes
+    }
     const likesNumber = this._likes.length
     return likesNumber
   }
@@ -52,6 +57,10 @@ export default class Card {
     placesPic.src = this._link;
     placesPic.alt = this._name;
     placesPic.title = this._name;
+    if (this._likes.find((elem) => elem._id === this._idProfile)) {
+      this._element.querySelector('.card__like').classList.add('card__like_active')
+    }
+
     return this._element;
   }
 }
