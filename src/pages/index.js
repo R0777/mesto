@@ -145,7 +145,7 @@ const popupEdit = new PopupWithForm('#profile', {
     renderLoading(true)
     api.setProfile(name, about)
       .then(res => {
-        userInfo.setUserInfo(res);
+        userInfo.setUserInfo(res)
       })
       .catch((err) => {
         console.log(err);
