@@ -38,9 +38,8 @@ export default class Card {
   }
 
   countLikes(res) {
-    if(res)  {
+    if(res) 
     this._likes = res.likes
-    }
     const likesNumber = this._likes.length
     return likesNumber
   }

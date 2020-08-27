@@ -95,9 +95,7 @@ function newCard(el) {
   if (idProfile !== el.owner._id) {
     const ifCardElement = newCard.generateCard('id');
     cardsList(el).addItem(ifCardElement)
-    // if (el.likes.find((elem) => elem._id === idProfile)) {
-    //   ifCardElement.querySelector('.card__like').classList.add('card__like_active')
-    // }
+
   } else {
     const elseCardElement = newCard.generateCard();
     cardsList(el).addItem(elseCardElement)
