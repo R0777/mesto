@@ -61,6 +61,7 @@ api.getProfile()
   })
 
 function cardsList(res) {
+  //console.log(res)
   const cardsList = new Section({
     items: res,
     renderer: (el) => {
@@ -130,7 +131,7 @@ Promise.all([
   ])
   .then(res => {
     const [userProfile, initialCards] = res
-    cardsList(initialCards).renderItem();
+    cardsList(initialCards.reverse()).renderItem();
     idProfile = userProfile._id
   })
   .catch((err) => {
