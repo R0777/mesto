@@ -99,7 +99,7 @@ export default class Api {
         })
       })
       .then((res) => {
-        return this._getResponseData(res)
+       this._getResponseData(res)
       })
   }
 }

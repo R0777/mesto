@@ -145,6 +145,7 @@ const popupEdit = new PopupWithForm('#profile', {
     api.setProfile(name, about)
       .then(res => {
         userInfo.setUserInfo(res)
+        popupEdit.close();
       })
       .catch((err) => {
         console.log(err);
@@ -163,6 +164,7 @@ const newAvatar = new PopupWithForm('#new-avatar', {
     api.profileAvatar(avatar)
       .then(res => {
         userInfo.setUserInfo(res)
+        newAvatar.close();
       })
       .catch((err) => {
         console.log(err);
@@ -182,6 +184,7 @@ const popupAdd = new PopupWithForm('#add-card', {
     api.setCard(place, link)
       .then(el => {
         newCard(el)
+        popupAdd.close();
       })
       .catch((err) => {
         console.log(err);
