@@ -115,9 +115,6 @@ function newCard(el) {
           })
       })
     })
-    if (el.likes.find((elem) => elem._id === idProfile)) {
-      elseCardElement.querySelector('.card__like').classList.add('card__like_active')
-    }
   }
   return newCard
 }
