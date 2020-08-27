@@ -24,7 +24,6 @@ const popUp = document.querySelectorAll('.popup')
 const popUpAddcard = document.querySelector('#add-card')
 const popUpNewAvatar = document.querySelector('#new-avatar')
 const popUpRemovecard = document.querySelector('#remove-card')
-const deleteButton = popUpRemovecard.querySelector('.popup__save')
 const proFile = document.querySelector('.profile')
 const addButton = proFile.querySelector('.profile__button')
 const profileName = proFile.querySelector('.profile__name')
@@ -61,7 +60,6 @@ api.getProfile()
   })
 
 function cardsList(res) {
-  //console.log(res)
   const cardsList = new Section({
     items: res,
     renderer: (el) => {

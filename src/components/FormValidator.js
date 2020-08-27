@@ -66,7 +66,6 @@ export default class FormValidator {
   }
 
   _checkEnter(inputList) {
-
     document.addEventListener('keydown', (event) => {
       if (event.keyCode === 13) {
         if (this._hasInvalidInput(inputList)) {

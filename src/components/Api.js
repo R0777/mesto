@@ -9,7 +9,7 @@ export default class Api {
 
   _getResponseData(res) {
     if (res.ok) {
-     return res.json();
+      return res.json();
     }
     return Promise.reject(new Error(`Опаньки, ошибка: ${res.status}`));
   }
@@ -77,7 +77,6 @@ export default class Api {
   }
 
   setProfile(name, about) {
-
     return fetch(`${this._url}/users/me`, {
         method: 'PATCH',
         headers: this._headers,
@@ -87,7 +86,7 @@ export default class Api {
         })
       })
       .then((res) => {
-      return this._getResponseData(res)
+        return this._getResponseData(res)
       })
   }
 
