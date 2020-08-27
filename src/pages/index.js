@@ -20,6 +20,7 @@ const popUp = document.querySelectorAll('.popup')
 const popUpAddcard = document.querySelector('#add-card')
 const popUpNewAvatar = document.querySelector('#new-avatar')
 const popUpRemovecard = document.querySelector('#remove-card')
+const deleteButton = popUpRemovecard.querySelector('.popup__save')
 const proFile = document.querySelector('.profile')
 const addButton = proFile.querySelector('.profile__button')
 const profileName = proFile.querySelector('.profile__name')
@@ -91,12 +92,12 @@ function newCard(el) {
         })
     }
   },{
-    deleteCardTrash: (cardElement) => {      
+    deleteCardTrash: (cardElement, cardId) => {      
         popUpTrash.open();
         popUpTrash.setEventListeners();
         popUpRemovecard.addEventListener('submit', (event) => {
           event.preventDefault();
-          api.deleteCard(el._id)
+          api.deleteCard(cardId)
             .then(res => {
               cardElement.remove();
               popUpTrash.close();

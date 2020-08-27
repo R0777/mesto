@@ -33,7 +33,7 @@ export default class Card {
       });
 
       this._element.querySelector('.card__trash').addEventListener('click', () => {
-        this._deleteCardTrash(this._element);
+        this._deleteCardTrash(this._element, this._id);
       });
 
     this._element.querySelector('.card__pic').addEventListener('click', () => {
