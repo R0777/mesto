@@ -1,14 +1,14 @@
 export default class Card {
-  constructor(name, link, likes, id, ownerid, idprofile, cardTemplate, { handleCardClick }, {handleLikeClick}) {
+  constructor(name, link, likes, id, idprofile, cardTemplate, { handleCardClick }, {handleLikeClick}, {deleteCardTrash}) {
     this._name = name;
       this._link = link;
       this._likes = likes;
       this._id = id;
-      this._ownerid = ownerid;
       this._idProfile = idprofile;
       this._template = cardTemplate;
       this._handleCardClick = handleCardClick;
       this._handleLikeClick = handleLikeClick;
+      this._deleteCardTrash = deleteCardTrash;
   }
 
   _getTemplate() {
@@ -30,6 +30,10 @@ export default class Card {
 
       this._element.querySelector('.card__like').addEventListener('click', () => {
         this._clickLike();
+      });
+
+      this._element.querySelector('.card__trash').addEventListener('click', () => {
+        this._deleteCardTrash(this._element);
       });
 
     this._element.querySelector('.card__pic').addEventListener('click', () => {

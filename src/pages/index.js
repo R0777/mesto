@@ -67,7 +67,7 @@ api.getProfile()
   }
 
 function newCard(el) {
-  const newCard = new Card(el.name, el.link, el.likes, el._id, el.owner._id, idProfile, '.template__place', {
+  const newCard = new Card(el.name, el.link, el.likes, el._id, idProfile, '.template__place', {
     handleCardClick: (image, description) => {
       popupWithImage.open(image, description);
     }
@@ -90,7 +90,25 @@ function newCard(el) {
           console.log(err);
         })
     }
-  })
+  },{
+    deleteCardTrash: (cardElement) => {      
+        popUpTrash.open();
+        popUpTrash.setEventListeners();
+        popUpRemovecard.addEventListener('submit', (event) => {
+          event.preventDefault();
+          api.deleteCard(el._id)
+            .then(res => {
+              cardElement.remove();
+              popUpTrash.close();
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+        })
+      
+    }
+  }
+  )
 
   if (idProfile !== el.owner._id) {
     const ifCardElement = newCard.generateCard('id');
@@ -99,22 +117,6 @@ function newCard(el) {
   } else {
     const elseCardElement = newCard.generateCard();
     cardsList(el).addItem(elseCardElement)
-    const trashBin = document.querySelector('.card__trash')
-    trashBin.addEventListener('click', () => {
-      popUpTrash.open();
-      popUpTrash.setEventListeners();
-      popUpRemovecard.addEventListener('submit', (event) => {
-        event.preventDefault();
-        api.deleteCard(el._id)
-          .then(res => {
-            elseCardElement.remove();
-            popUpTrash.close();
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-      })
-    })
   }
   return newCard
 }
