@@ -1,21 +1,17 @@
-import Section from '../components/Section.js'
-import PopupWithImage from '../components/PopupWithImage.js'
-import Card from '../components/Card.js'
+import { validationObj } from '../utils/constants.js';
+import { renderLoading } from '../utils/utils.js';
+import Section from '../components/Section.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import Card from '../components/Card.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import FormValidator from '../components/FormValidator.js';
 import Api from '../components/Api.js'
 import {
-  initialCards
-} from '../utils/utils.js';
-import {
-  validationObj
-} from '../components/FormValidator.js';
-import {
   cardForm,
   profileForm,
   avatarForm
-} from '../utils/constants.js'
+} from '../utils/constants.js';
 import './index.css';
 import Popup from '../components/Popup.js';
 
@@ -55,6 +51,9 @@ api.getProfile()
     profileAvatar.src = res.avatar;
     idProfile = res._id;
   })
+  .catch((err) => {
+    console.log(err);
+  })
 
   function cardsList(res) {
     const cardsList = new Section({
@@ -80,9 +79,15 @@ function newCard(el) {
           if (!cardElement.querySelector('.card__like').classList.contains('card__like_active')) {
             api.unLike(cardId)
               .then(res => {
-                cardElement.querySelector('.card__like-number').textContent = res.likes.length;
+                cardElement.querySelector('.card__like-number').textContent = newCard.countLikes();
+              })
+              .catch((err) => {
+                console.log(err);
               })
           }
+        })
+        .catch((err) => {
+          console.log(err);
         })
     }
   })
@@ -107,6 +112,9 @@ function newCard(el) {
             elseCardElement.remove();
             popUpTrash.close();
           })
+          .catch((err) => {
+            console.log(err);
+          })
       })
     })
     if (el.likes.find((elem) => elem._id === idProfile)) {
@@ -116,20 +124,18 @@ function newCard(el) {
   return newCard
 }
 
-
+Promise.all([
+  api.getProfile(),
   api.getInitialCards()
-  .then(res => {
-    cardsList(res).renderItem();
+])
+.then(res => {
+  const [userProfile, initialCards] = res
+    cardsList(initialCards).renderItem();
+    idProfile = userProfile._id
   })
-
-const renderLoading = (isLoading) => {
-  const buttonText = document.querySelector('.popup__save')
-  if (isLoading) {
-    buttonText.textContent = 'Сохранение...';
-  } else {
-    buttonText.textContent = 'Сохранить';
-  }
-}
+  .catch((err) => {
+    console.log(err);
+  })
 
 const popupEdit = new PopupWithForm('#profile', {
   submitAction: ({
@@ -140,6 +146,9 @@ const popupEdit = new PopupWithForm('#profile', {
     api.setProfile(name, about)
       .then(res => {
         userInfo.setUserInfo(res);
+      })
+      .catch((err) => {
+        console.log(err);
       })
       .finally(err => {
         renderLoading(false)
@@ -156,6 +165,9 @@ const newAvatar = new PopupWithForm('#new-avatar', {
       .then(res => {
         userInfo.setUserInfo(res)
       })
+      .catch((err) => {
+        console.log(err);
+      })
       .finally(err => {
         renderLoading(false)
       })
@@ -171,6 +183,9 @@ const popupAdd = new PopupWithForm('#add-card', {
     api.setCard(place, link)
       .then(el => {
         newCard(el)
+      })
+      .catch((err) => {
+        console.log(err);
       })
       .finally(err => {
         renderLoading(false)

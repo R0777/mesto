@@ -35,10 +35,18 @@ module.exports = {
         }
       },
       {
-        test: /\.(png|jpe?g|gif|woff2|woff|svg)$/i,
+        test: /\.(png|jpe?g|gif|svg)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: 'file-loader?name=./images/[name].[ext]',
+          },
+        ],
+      },
+      {
+        test: /\.(eot|ttf|woff|woff2)$/i,
+        use: [
+          {
+            loader: 'file-loader?name=./fonts/[name].[ext]',
           },
         ],
       },

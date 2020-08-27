@@ -35,7 +35,7 @@ export default class Card {
     });
   }
 
-  _countLikes() {
+  countLikes() {
     const likesNumber = this._likes.length
     return likesNumber
   }
@@ -46,9 +46,8 @@ export default class Card {
     if (userId) {
       this._element.querySelector('.card__trash').style.display = 'none'
     }
-    this._element.querySelector('.card__trash')
     this._element.querySelector('.card__name').textContent = this._name;
-    this._element.querySelector('.card__like-number').textContent = this._countLikes();
+    this._element.querySelector('.card__like-number').textContent = this.countLikes();
     const placesPic = this._element.querySelector('.card__pic');
     placesPic.src = this._link;
     placesPic.alt = this._name;

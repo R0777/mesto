@@ -1,11 +1,3 @@
-export const validationObj = {
-  formsSelector: 'popup__block',
-  inputSelector: 'popup__input',
-  submitButtonSelector: 'popup__save',
-  buttonDisabledClass: 'popup__save_inactive',
-  inputError: 'popup__input-error',
-  inputErrorBorder: 'popup__input_error'
-};
 
 export default class FormValidator {
   constructor(obj, validForm) {

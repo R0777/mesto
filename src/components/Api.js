@@ -7,19 +7,20 @@ export default class Api {
     this._headers = headers;
   }
 
+  _getResponseData(res) {
+    if (res.ok) {
+     return res.json();
+    }
+    return Promise.reject(new Error(`Опаньки, ошибка: ${res.status}`));
+  }
+
   getInitialCards() {
     return fetch(`${this._url}/cards`, {
         headers: this._headers
       })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Опаньки, ошибка с карточками: ${res.status}`);
+      .then(res => {
+        return this._getResponseData(res)
       })
-      .catch((err) => {
-        console.log(err);
-      });
   }
 
   setCard(place, link) {
@@ -32,13 +33,7 @@ export default class Api {
         })
       })
       .then((el) => {
-        if (el.ok) {
-          return el.json();
-        }
-        return Promise.reject(`Опаньки, инфо карточки не пришло: ${el.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
+        return this._getResponseData(el)
       })
   }
 
@@ -48,16 +43,9 @@ export default class Api {
         headers: this._headers,
       })
       .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Опаньки, инфо удаление карточки не пришло: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
+        return this._getResponseData(res)
       })
   }
-
 
   addLike(id) {
     return fetch(`${this._url}/cards/likes/${id}`, {
@@ -65,13 +53,7 @@ export default class Api {
         headers: this._headers,
       })
       .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Опаньки, лайк карточки не добавился: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
+        return this._getResponseData(res)
       })
   }
 
@@ -81,30 +63,17 @@ export default class Api {
         headers: this._headers,
       })
       .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Опаньки, минус лайк карточки не получился: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
+        return this._getResponseData(res)
       })
   }
-
 
   getProfile() {
     return fetch(`${this._url}/users/me`, {
         headers: this._headers
       })
       .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Опаньки, ошибка в профайле: ${res.status}`);
+        return this._getResponseData(res)
       })
-      .catch((err) => {
-        console.log(err);
-      });
   }
 
   setProfile(name, about) {
@@ -118,13 +87,7 @@ export default class Api {
         })
       })
       .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Опаньки, инфо из профайла не пришло: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
+      return this._getResponseData(res)
       })
   }
 
@@ -137,13 +100,7 @@ export default class Api {
         })
       })
       .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Опаньки, инфо из профайла не пришло: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
+        return this._getResponseData(res)
       })
   }
 }
